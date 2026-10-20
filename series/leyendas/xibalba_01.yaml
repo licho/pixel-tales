@@ -4,7 +4,8 @@ titulo: "¿Quiénes eran los señores de Xibalbá?"
 estilo: xibalba
 formato: vertical
 subtitulos: true
-# voz: xibalba_01.mp3     # cuando exista la voz, los tiempos se ajustan solos
+voz: ../../audio/xibalba_01_toma1.mp3          # voz: Ludovico (ElevenLabs, eleven_v4)
+palabras: ../../audio/xibalba_01_toma1.palabras.json   # tiempos por palabra -> cortes exactos
 
 paneles:
   - escena: cueva
