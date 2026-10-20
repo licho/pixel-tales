@@ -1,0 +1,62 @@
+nombre: oceano
+descripcion: Tormenta en el mar. Grises pizarra, azul acero, verde abisal, espuma blanca, ojos amarillos y rayo violeta.
+tramado: 11
+ambiente: [0.62, 0.68, 0.74]       # luz fría y gris de tormenta
+primer_plano: 0.5
+lluvia: [118, 128, 134]
+salpicadura: [190, 198, 200]
+ceniza: [120, 126, 130]
+brasa: [230, 200, 90]
+humo: [80, 88, 94]
+texto: [226, 230, 232]
+acento: [236, 200, 72]            # título amarillo (ojos de la criatura)
+fuente_texto: PixelifySans-Bold.woff
+fuente_titulo: Silkscreen-Bold.woff
+paleta:
+  # gris pizarra / tormenta
+  - [4, 6, 8]
+  - [9, 12, 15]
+  - [14, 18, 22]
+  - [20, 25, 30]
+  - [27, 33, 38]
+  - [35, 42, 48]
+  - [45, 53, 59]
+  - [57, 66, 72]
+  - [71, 81, 87]
+  - [88, 98, 104]
+  - [108, 118, 123]
+  - [130, 140, 144]
+  - [156, 164, 167]
+  - [184, 190, 192]
+  - [212, 216, 216]
+  - [236, 238, 236]
+  # azul acero / mar
+  - [14, 22, 30]
+  - [20, 32, 42]
+  - [28, 44, 56]
+  - [40, 60, 72]
+  - [56, 80, 92]
+  - [80, 104, 114]
+  # verde abisal (criatura)
+  - [14, 20, 16]
+  - [22, 30, 24]
+  - [32, 42, 34]
+  - [44, 56, 44]
+  - [60, 74, 58]
+  - [80, 96, 74]
+  - [104, 120, 94]
+  # ojos / rayo
+  - [150, 120, 30]
+  - [214, 176, 52]
+  - [250, 226, 110]
+  - [200, 190, 236]
+  - [120, 126, 150]
+  - [148, 154, 178]
+  - [176, 180, 204]
+  - [240, 236, 255]
+  # barco: rojo óxido, madera, blanco sucio
+  - [70, 20, 18]
+  - [120, 34, 28]
+  - [168, 52, 40]
+  - [92, 70, 50]
+  - [190, 184, 170]

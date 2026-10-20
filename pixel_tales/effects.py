@@ -9,24 +9,25 @@ from .core import grid
 class Rain:
     """Lluvia pixelada en espacio de pantalla."""
 
-    def __init__(self, vw, vh, cantidad=180, seed=1):
+    def __init__(self, vw, vh, cantidad=180, seed=1, viento=0.25, largo=1.0, salpicaduras=True):
         rng = np.random.default_rng(seed)
-        self.vw, self.vh = vw, vh
+        self.vw, self.vh, self.viento, self.largo, self.salp = vw, vh, viento, largo, salpicaduras
         self.drops = rng.random((int(cantidad * vw * vh / (384 * 216)), 4)) * [vw, vh, 1, 1]
 
     def masks(self, t, fi):
         vw, vh = self.vw, self.vh
         streak = np.zeros((vh, vw), bool)
         for rx, ry, sp, ln in self.drops:
-            y = (ry + t * (150 + 70 * sp)) % (vh + 10) - 5
-            x = (rx - (y - ry) * 0.25) % vw
-            for k in range(3 + int(ln * 3)):
-                yy, xx = int(y + k), int(x + k * 0.25)
+            y = (ry + t * (150 + 70 * sp) * (0.8 + 0.4 * self.largo)) % (vh + 10) - 5
+            x = (rx - (y - ry) * self.viento) % vw
+            for k in range(int((3 + int(ln * 3)) * self.largo)):
+                yy, xx = int(y + k), int(x - k * self.viento)
                 if 0 <= yy < vh and 0 <= xx < vw:
                     streak[yy, xx] = True
         splash = np.zeros((vh, vw), bool)
-        rng = np.random.default_rng(fi)
-        splash[rng.integers(int(vh * 0.7), vh, 18), rng.integers(0, vw, 18)] = True
+        if self.salp:
+            rng = np.random.default_rng(fi)
+            splash[rng.integers(int(vh * 0.7), vh, 18), rng.integers(0, vw, 18)] = True
         return streak, splash
 
 

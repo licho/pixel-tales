@@ -1,0 +1,28 @@
+# Demo: panel 1 hecho con código (escena mar_tormenta + sprites); panel 2 = imagen de Gemini pasada por el motor.
+estilo: oceano
+formato: horizontal
+subtitulos: false
+paneles:
+  - escena: mar_tormenta
+    params: {espuma: [[0.52, 0.80, 0.30]]}
+    efectos: [lluvia, relampago]
+    lluvia: {cantidad: 380, viento: -0.18, largo: 1.7, salpicaduras: false}
+    camara: {pan: 4}
+    actores:
+      - sprite: oceano/primigenio
+        pos: [214, 186]
+        escala: 0.92
+        contraluz: false
+      - sprite: oceano/pesquero
+        pos: [120, 196]
+        flota: 1.5
+        balanceo: 6
+    duracion: 8
+  - escena: imagen
+    params: {archivo: fondos/oceano/cthulhu_gemini.jpg}
+    efectos: [lluvia, relampago]
+    lluvia: {cantidad: 260, viento: -0.18, largo: 1.7, salpicaduras: false}
+    camara: {pan: 4}
+    actores:
+      - ojos: {pos: [254, 47], color: [250, 226, 110], separacion: 17, tam: 1}
+    duracion: 8

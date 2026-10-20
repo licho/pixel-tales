@@ -1,0 +1,31 @@
+{
+  "ancla": [
+    31,
+    42
+  ],
+  "brillos": [
+    {
+      "pos": [
+        20,
+        2
+      ],
+      "color": [
+        250,
+        220,
+        120
+      ]
+    },
+    {
+      "pos": [
+        39,
+        24
+      ],
+      "color": [
+        240,
+        200,
+        100
+      ]
+    }
+  ],
+  "notas": "barco pesquero de arrastre, proa a la derecha; ancla = línea del agua; usar con flota y balanceo"
+}

@@ -188,10 +188,12 @@ class PanelRenderer:
         self.far_a = hup(sc.far_a)
         self.relampago = "relampago" in ef
         if self.relampago:
-            self.sky_f = hup(pal.quantize(sc.sky * 2.1 + 30))
+            self.sky_f = hup(pal.quantize(getattr(sc, "sky_flash", None) if getattr(sc, "sky_flash", None) is not None
+                                          else sc.sky * 2.1 + 30))
             self.far_f = hup(pal.quantize(sc.far * 0.55))
 
         alb, a, em = sc.mid_alb.copy(), sc.mid_a.copy(), sc.mid_em.copy()
+        self.depth0 = np.full(a.shape, -1.0, np.float32)      # y de los pies de cada actor (-1 = nadie)
         self.dyn, self.eyes = [], []
         for act in panel.get("actores", []) or []:
             if "sprite" in act and ("movimiento" in act or "aparece" in act or "flota" in act or "desaparece" in act):
@@ -202,6 +204,7 @@ class PanelRenderer:
                 em_tmp = np.zeros_like(em)
                 placed = sp.place(alb, a, x, y, act.get("escala", 1.0), act.get("espejo", False), em_tmp)
                 alb[placed] *= float(act.get("brillo", 1.0))      # <1 = personaje en sombra
+                self.depth0[placed] = y
                 em[placed] = 0
                 if act.get("contraluz", True):
                     rim_light(placed, em, sc.lights)
@@ -222,12 +225,14 @@ class PanelRenderer:
                        for i, f in enumerate(self.fires) if f.get("humo", True)]
         self.fg = hup(pal.quantize(sc.fg_alb * style.ambiente * style.primer_plano + 4))
         self.fg_a = hup(sc.fg_a)
-        self.rain = Rain(self.VW, self.VH) if "lluvia" in ef else None
+        self.rain = Rain(self.VW, self.VH, **panel.get("lluvia", {})) if "lluvia" in ef else None
         self.ash = Ash(self.VW, self.VH) if "ceniza" in ef else None
 
-    def mid_layer(self, t, fi):
+    def mid_layer(self, t, fi, flash=False):
         LW, LH = self.LW, self.LH
         light = np.broadcast_to(self.style.ambiente, (LH, LW, 3)).copy()
+        if flash:
+            light += 0.55
         extra = np.zeros((LH, LW, 3), np.float32)
         for i, L in enumerate(self.lights):
             tipo = L.parpadeo if (L.parpadeo != "farol" or self.parpadeo) else None
@@ -239,14 +244,25 @@ class PanelRenderer:
         if self.dyn:
             img = Image.fromarray(self.alb_u8.copy())
             zm = Image.new("L", (LW, LH), 0)
+            depth = self.depth0.copy()
             for i, (fn, cfg) in enumerate(self.dyn):
-                fn(img, zm, cfg, t, i)
+                one = Image.new("L", (LW, LH), 0)
+                fn(img, one, cfg, t, i)
+                m1 = np.asarray(one) > 127
+                depth[m1] = getattr(fn, "y", 1e6)
+                zm.paste(255, (0, 0), one)
             zmask = np.asarray(zm) > 127
+            self.sc.depth = depth
             alb = np.asarray(img, np.float32)
             a = a | zmask
             em = em * ~zmask[..., None]
+        if not self.dyn:
+            self.sc.depth = self.depth0
         col = alb * light + em + extra
-        self.sc.animar(col, t)
+        self.sc.flash = flash
+        extra_a = self.sc.animar(col, t)
+        if isinstance(extra_a, np.ndarray):
+            a = a | extra_a
         for sm in self.smokes:
             sm.apply(col, t)
         rgb = self.style.palette.quantize(col)
@@ -271,7 +287,7 @@ class PanelRenderer:
         o = ox("far")
         src = self.far_f if flash else self.far
         np.copyto(frame, src[:, o:o + W], where=self.far_a[:, o:o + W, None])
-        rgb, a = self.mid_layer(t, fi)
+        rgb, a = self.mid_layer(t, fi, flash)
         o = ox("mid")
         rgb, a = hup(rgb), hup(a)
         np.copyto(frame, rgb[:, o:o + W], where=a[:, o:o + W, None])

@@ -198,6 +198,7 @@ class MovingSprite:
         self.im, self.ax, self.ay, self.cfg = im, ax, ay, cfg
         a = np.asarray(im)[..., 3] > 127
         self.mask = Image.fromarray((a * 255).astype(np.uint8))
+        self.y = cfg["pos"][1]
 
     def __call__(self, img, alpha, cfg, t, i=0):
         c = self.cfg
@@ -207,6 +208,12 @@ class MovingSprite:
         dx, dy = c.get("movimiento", (0, 0))
         tt = t - c.get("aparece", 0)
         x, y = x + dx * tt, y + dy * tt + c.get("flota", 0) * math.sin(t * 1.6 + i)
-        px, py = int(round(x - self.ax)), int(round(y - self.ay))
-        img.paste(self.im.convert("RGB"), (px, py), self.mask)
-        alpha.paste(255, (px, py, px + self.im.width, py + self.im.height), self.mask)
+        self.y = y
+        im, mask, ax, ay = self.im, self.mask, self.ax, self.ay
+        if c.get("balanceo"):                      # se mece (barcos): grados de inclinación
+            ang = c["balanceo"] * math.sin(t * 1.3 + i)
+            im = im.rotate(ang, resample=Image.NEAREST, center=(ax, ay))
+            mask = mask.rotate(ang, resample=Image.NEAREST, center=(ax, ay))
+        px, py = int(round(x - ax)), int(round(y - ay))
+        img.paste(im.convert("RGB"), (px, py), mask)
+        alpha.paste(255, (px, py, px + im.width, py + im.height), mask)

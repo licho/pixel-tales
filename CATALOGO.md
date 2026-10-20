@@ -12,6 +12,7 @@ Formatos de marca: `cuadrado` (perfil 1080), `portada_fb` (1640x624), `banner_yt
 | `xibalba` | Inframundo maya: obsidiana, rojo sangre, hueso, ocre, jade apagado, antorcha |
 | `pixeltales` | Marca del canal: mezcla de survival y xibalba (portadas, piezas de marca) |
 | `nahual` | Terror mexicano nocturno: azul noche, bosque, niebla, sepia de fotos, lámpara ámbar, ojos dorados |
+| `oceano` | Tormenta en el mar: grises pizarra, azul acero, verde abisal, espuma, ojos amarillos, rayo violeta |
 
 ## Escenas / fondos (`scenes/`)
 Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = horizontal.
@@ -29,6 +30,8 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `archivo` | H, V | Cuarto de investigación: corcho con fotos e hilos rojos, escritorio, lámpara | `ventana`, `jaguar` | silla (0.52 W, 0.93 H) |
 | `bosque` | todos | Bosque con sendero de lodo y niebla | `hora` (tarde/noche), `niebla`, `huellas`, `orilla` (agua abajo), `semilla` | sendero cerca (0.5 W, 0.95 H); entre árboles x 0.25-0.75 W, y 0.62-0.66 H; lancha (0.45 W, 0.97 H) con orilla |
 | `lago` | todos | Lago con montañas, bosque y niebla | `vista` (orilla/aerea), `hora` (anochecer/noche), `isla`, `niebla` | orilla: lancha (0.45 W, 0.93 H); aérea: lancha escala ~0.6 en x 0.4-0.6 W |
+| `mar_tormenta` | todos | Mar en tormenta: nubes, cortinas de lluvia, olas animadas con espuma, niebla, rayo (con `relampago`). Las olas tapan a los actores según su profundidad | `horizonte`, `olas` (0.2 calma – 1.5 fuerte), `claro` [x,y], `niebla`, `espuma` [[x,y,ancho]...] (salpicaduras), `semilla` | barco (0.35 W, 0.86-0.9 H) con `flota` y `balanceo`; criatura (0.5 W, 0.78-0.86 H) |
+| `imagen` | todos | Usa una imagen (ej. de IA) como fondo y la pasa por la paleta del estilo; encima funcionan lluvia, relámpago, ojos, zoom… Sin parallax ni olas animadas | `archivo` (ruta en el repo, ej. `fondos/...`), `foco` [x,y], `brillo` | coordenadas = píxeles de la capa |
 | `juego_pelota` | H, V | Cancha de pelota de noche, aros, templos, luna | `aros`, `antorchas`, `luna`, `semilla` | dos personajes (0.40 W, 0.97 H) y (0.60 W, 0.97 H) |
 
 ## Sprites (`sprites/`)
@@ -52,6 +55,8 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `nahual/lancha` | Lancha de madera de lado (ancla = línea del agua) | 26 px |
 | `nahual/lancha_aerea` | Lancha vista desde arriba con el chico tendido | 70 px |
 | `nahual/sombra_agua` | Sombra de jaguar bajo el agua (vista desde arriba) | 90 px |
+| `oceano/primigenio` | Criatura colosal alada con tentáculos, ojos amarillos que brillan; ancla = línea del agua (ancho 270) | 192 px |
+| `oceano/pesquero` | Barco pesquero, proa a la derecha, farol encendido; ancla = línea del agua | 50 px |
 
 ## Actores animados
 | Tipo | Opciones |
@@ -61,12 +66,12 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `escorpiones` | `cantidad`, `zona: [x0,y0,x1,y1]`, `tam`, `semilla` |
 | `ojos` | `pos`, `color` (default rojo), `separacion`, `tam`, `aparece` (segundo) — brillan en la oscuridad |
 | sprite en sombra | cualquier `sprite` con `brillo: 0.5` (más oscuro; sus ojos siguen brillando) y `contraluz: false` |
-| sprite animado | cualquier `sprite` con `aparece`, `desaparece` (seg), `movimiento: [dx, dy]` (px/seg) o `flota` (px) |
+| sprite animado | cualquier `sprite` con `aparece`, `desaparece` (seg), `movimiento: [dx, dy]` (px/seg), `flota` (px) o `balanceo` (grados) |
 
 ## Efectos (`efectos: [...]`)
 | Nombre | Qué hace |
 |---|---|
-| `lluvia` | Lluvia pixelada con salpicaduras |
+| `lluvia` | Lluvia pixelada. Opcional en el panel: `lluvia: {cantidad: 380, viento: -0.18, largo: 1.7, salpicaduras: false}` |
 | `ceniza` | Ceniza y brasas flotando |
 | `relampago` | Destello del cielo a mitad del panel |
 | `parpadeo` | El farol de la `calle` falla de vez en cuando |
