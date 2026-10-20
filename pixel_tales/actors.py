@@ -17,17 +17,21 @@ class Sprite:
         meta = path.with_suffix(".json")
         info = json.loads(meta.read_text()) if meta.exists() else {}
         self.ancla = tuple(info.get("ancla", (im.width // 2, im.height - 1)))
+        self.brillos = info.get("brillos", [])   # [{pos: [x, y], color: [r, g, b]}] puntos que brillan solos
 
-    def place(self, alb, alpha, x, y, escala=1.0, espejo=False):
+    def place(self, alb, alpha, x, y, escala=1.0, espejo=False, em=None):
         """Pega el sprite con sus pies en (x, y). Devuelve la máscara colocada."""
         im = self.img
         ax, ay = self.ancla
+        glow = [(b["pos"][0], b["pos"][1], b.get("color", [255, 60, 40])) for b in self.brillos]
         if espejo:
             im = im.transpose(Image.FLIP_LEFT_RIGHT)
             ax = im.width - 1 - ax
+            glow = [(im.width - 1 - gx, gy, c) for gx, gy, c in glow]
         if escala != 1.0:
             im = im.resize((max(1, round(im.width * escala)), max(1, round(im.height * escala))), Image.NEAREST)
             ax, ay = ax * escala, ay * escala
+            glow = [(gx * escala, gy * escala, c) for gx, gy, c in glow]
         arr = np.asarray(im, np.float32)
         m = arr[..., 3] > 127
         x0, y0 = int(round(x - ax)), int(round(y - ay))
@@ -44,6 +48,11 @@ class Sprite:
         region[mm] = arr[sy0:sy0 + h, sx0:sx0 + w, :3][mm]
         alpha[dy0:dy0 + h, dx0:dx0 + w] |= mm
         placed[dy0:dy0 + h, dx0:dx0 + w] = mm
+        if em is not None:
+            for gx, gy, c in glow:
+                px, py = int(round(x0 + gx)), int(round(y0 + gy))
+                if 0 <= px < W and 0 <= py < H:
+                    em[py, px] = c
         return placed
 
 
@@ -96,3 +105,74 @@ def draw_zombie(img, alpha, z, t, i=0):
         g.line([(x - h * .12 + sway, y - h * .76), (x - h * .16 + sway * .5, y - h * .48)], fill=cs, width=aw)
         r = max(1.0, h * 0.09)
         g.ellipse([hx - r, hy - r, hx + r, hy + r], fill=cs)
+
+
+# ---------------------------------------------------------- murciélagos ---
+def draw_bats(img, alpha, cfg, t, i=0):
+    """cfg: {cantidad, zona: [x0, y0, x1, y1], tam}. Vuelan en círculos aleatorios dentro de la zona."""
+    rng = np.random.default_rng(cfg.get("semilla", 5) + i)
+    x0, y0, x1, y1 = cfg.get("zona", [0, 0, img.width, img.height // 2])
+    d, dm = ImageDraw.Draw(img), ImageDraw.Draw(alpha)
+    col = tuple(cfg.get("color", (10, 8, 10)))
+    for k in range(cfg.get("cantidad", 10)):
+        cx, cy = rng.uniform(x0, x1), rng.uniform(y0, y1)
+        rx, ry = rng.uniform(8, 40), rng.uniform(4, 18)
+        sp, ph = rng.uniform(0.6, 1.6) * rng.choice([-1, 1]), rng.uniform(0, 6.3)
+        s = cfg.get("tam", 1.0) * rng.uniform(0.7, 1.3)
+        x = cx + rx * math.cos(t * sp + ph)
+        y = cy + ry * math.sin(t * sp * 1.3 + ph)
+        flap = math.sin(t * 18 + ph * 3)
+        wy = -3 * s * flap
+        pts = [(x - 5 * s, y + wy), (x - 2 * s, y - 1 * s), (x, y + 1 * s), (x + 2 * s, y - 1 * s), (x + 5 * s, y + wy),
+               (x + 2 * s, y + 1.5 * s), (x, y + 2 * s), (x - 2 * s, y + 1.5 * s)]
+        for g, c in ((d, col), (dm, 255)):
+            g.polygon(pts, fill=c)
+
+
+# ------------------------------------------------------------ escorpiones ---
+def draw_scorpions(img, alpha, cfg, t, i=0):
+    """cfg: {cantidad, zona: [x0, y0, x1, y1], tam}. Caminan lento de un lado a otro."""
+    rng = np.random.default_rng(cfg.get("semilla", 11) + i)
+    x0, y0, x1, y1 = cfg["zona"]
+    d, dm = ImageDraw.Draw(img), ImageDraw.Draw(alpha)
+    col = tuple(cfg.get("color", (40, 26, 20)))
+    for k in range(cfg.get("cantidad", 8)):
+        bx, by = rng.uniform(x0, x1), rng.uniform(y0, y1)
+        dirx = rng.choice([-1, 1])
+        sp = rng.uniform(1.5, 4)
+        s = cfg.get("tam", 1.0) * (0.6 + 0.8 * (by - y0) / max(y1 - y0, 1))
+        x = x0 + (bx - x0 + dirx * sp * t) % max(x1 - x0, 1)
+        y = by
+        leg = int(t * 8 + k) % 2
+        for g, c in ((d, col), (dm, 255)):
+            g.ellipse([x - 3 * s, y - 1.2 * s, x + 3 * s, y + 1.2 * s], fill=c)
+            g.line([(x - 3 * s * dirx, y), (x - 5 * s * dirx, y - 2 * s), (x - 4 * s * dirx, y - 4 * s),
+                    (x - 2.5 * s * dirx, y - 3.5 * s)], fill=c, width=max(1, int(s)))
+            g.line([(x + 3 * s * dirx, y), (x + 5 * s * dirx, y - 1 * s)], fill=c, width=max(1, int(s)))
+            for j in (-1.5, 0, 1.5):
+                g.line([(x + j * s, y), (x + j * s - s, y + (1.5 + leg) * s)], fill=c, width=1)
+
+
+# ------------------------------------------------------------------- ojos ---
+def draw_eyes(rgb, alpha, cfg, t, i=0):
+    """Ojos brillando en la oscuridad (se dibujan ya con color final, no les afecta la luz).
+    cfg: {pos: [x, y], color: [r, g, b], separacion, tam, aparece: segundo}"""
+    if t < cfg.get("aparece", 0):
+        return
+    x, y = cfg["pos"]
+    sep = cfg.get("separacion", 4)
+    tam = cfg.get("tam", 1)
+    ph = cfg.get("fase", i * 1.7)
+    if ((t * 0.9 + ph) % 3.3) < 0.12:          # parpadeo
+        return
+    c = np.array(cfg.get("color", [255, 70, 40]), np.uint8)
+    dim = (c.astype(np.float32) * 0.45).astype(np.uint8)
+    H, W = alpha.shape
+    for ex in (x - sep / 2, x + sep / 2):
+        for dx in range(-tam, tam + 1):
+            for dy in range(-((tam + 1) // 2), (tam + 1) // 2 + 1):
+                px, py = int(ex + dx), int(y + dy)
+                if 0 <= px < W and 0 <= py < H:
+                    edge = abs(dx) == tam
+                    rgb[py, px] = dim if edge else c
+                    alpha[py, px] = True

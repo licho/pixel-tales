@@ -20,6 +20,8 @@ VP = (230, 120)  # punto de fuga
 
 
 class Escena(Scene):
+    formatos = ("horizontal",)
+
     def build(self):
         p = self.p
         self.xx, self.yy = grid()

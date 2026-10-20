@@ -11,6 +11,12 @@ LW, LH = 424, 216
 VW, VH = 384, 216
 S = 5
 
+# formato -> (ancho capa, alto capa, ancho vista, alto vista). Salida = vista x S.
+FORMATOS = {
+    "horizontal": (424, 216, 384, 216),   # 1920x1080
+    "vertical": (256, 384, 216, 384),     # 1080x1920 (reels)
+}
+
 _BAYER = (np.array([[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]], np.float32) + 0.5) / 16 - 0.5
 _GRIDS, _BAYER_TILES = {}, {}
 
@@ -102,14 +108,14 @@ class Light:
         self.rgb = self.mapa[..., None] * np.array(self.color, np.float32)
 
 
-def point_light(x, y, radio, intensidad):
-    xx, yy = grid()
+def point_light(x, y, radio, intensidad, w=LW, h=LH):
+    xx, yy = grid(w, h)
     return intensidad * np.exp(-((xx - x) ** 2 + (yy - y) ** 2) / (2 * radio ** 2))
 
 
-def pool_light(x, y, rx, ry, intensidad, y_min=0):
+def pool_light(x, y, rx, ry, intensidad, y_min=0, w=LW, h=LH):
     """Charco de luz elíptico sobre el piso."""
-    xx, yy = grid()
+    xx, yy = grid(w, h)
     return intensidad * np.exp(-((xx - x) / rx) ** 2 - ((yy - y) / ry) ** 2) * (yy > y_min)
 
 

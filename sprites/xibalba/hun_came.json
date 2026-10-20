@@ -1,0 +1,31 @@
+{
+  "ancla": [
+    26,
+    65
+  ],
+  "brillos": [
+    {
+      "pos": [
+        22,
+        15
+      ],
+      "color": [
+        255,
+        60,
+        36
+      ]
+    },
+    {
+      "pos": [
+        29,
+        15
+      ],
+      "color": [
+        255,
+        60,
+        36
+      ]
+    }
+  ],
+  "notas": "señor sentado; pies en el ancla"
+}

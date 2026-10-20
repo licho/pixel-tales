@@ -8,7 +8,7 @@ Motor para crear videos de historias ilustradas en **pixel art** con voz encima:
 3. **Sprites** (`sprites/`): personajes y objetos en PNG.
 4. **Episodios** (`series/<serie>/epXX.yaml`): qué escena, qué personajes y qué texto va en cada panel.
 
-Todo se pinta a 384x216 y se escala x5 a 1920x1080 sin suavizar, con paleta fija y tramado.
+Todo se pinta a baja resolución (384x216 horizontal o 216x384 vertical) y se escala x5 a 1920x1080 / 1080x1920 sin suavizar, con paleta fija y tramado. Incluye subtítulos y título con letra pixel (fuentes OFL en `fonts/`).
 
 ## Uso
 ```bash

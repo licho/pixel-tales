@@ -1,0 +1,95 @@
+# ¿Quiénes eran los señores de Xibalbá? — reel vertical (~55 s)
+# Coordenadas de actores en pixeles de arte: formato vertical = 256 x 384 (la vista es 216 x 384).
+titulo: "¿Quiénes eran los señores de Xibalbá?"
+estilo: xibalba
+formato: vertical
+subtitulos: true
+# voz: xibalba_01.mp3     # cuando exista la voz, los tiempos se ajustan solos
+
+paneles:
+  - escena: cueva
+    efectos: [ceniza]
+    camara: {pan: 6}
+    titulo: "LOS SEÑORES DE XIBALBÁ"
+    actores:
+      - ojos: {pos: [128, 150], separacion: 3, aparece: 2.0}
+    texto: "En el inframundo maya no gobernaba un solo dios de la muerte. Gobernaban doce… y cada uno tenía un trabajo."
+
+  - escena: rio
+    params: {agua: sangre}
+    efectos: [ceniza]
+    camara: {pan: 8}
+    actores:
+      - escorpiones: {cantidad: 7, zona: [6, 315, 70, 372], tam: 1.3}
+      - escorpiones: {cantidad: 7, zona: [186, 315, 250, 372], tam: 1.3, semilla: 21}
+    texto: "Para llegar a Xibalbá había que cruzar un río de escorpiones, uno de sangre y otro de pus… y elegir entre cuatro caminos que hablaban para confundirte."
+
+  - escena: salon_tronos
+    efectos: [ceniza]
+    camara: {pan: 5}
+    actores:
+      - sprite: xibalba/hun_came
+        pos: [102, 205]
+      - sprite: xibalba/vucub_came
+        pos: [154, 205]
+    texto: "En los tronos más altos estaban Hun Camé y Vucub Camé: Uno Muerte y Siete Muerte."
+
+  - escena: salon_tronos
+    efectos: [ceniza]
+    camara: {pan: 10}
+    actores:
+      - sprite: xibalba/hun_came
+        pos: [102, 205]
+      - sprite: xibalba/vucub_came
+        pos: [154, 205]
+      - sprite: xibalba/senor_a
+        pos: [60, 300]
+        escala: 0.8
+      - sprite: xibalba/senor_a
+        pos: [80, 302]
+        escala: 0.8
+        espejo: true
+      - sprite: xibalba/senor_b
+        pos: [176, 300]
+        escala: 0.8
+      - sprite: xibalba/senor_b
+        pos: [196, 302]
+        escala: 0.8
+        espejo: true
+      - sprite: xibalba/senor_a
+        pos: [108, 352]
+        escala: 1.1
+      - sprite: xibalba/senor_b
+        pos: [150, 352]
+        escala: 1.1
+        espejo: true
+    texto: "Los demás trabajaban en pareja: unos enfermaban la sangre, otros hinchaban los cuerpos, y otros los dejaban en los huesos."
+
+  - escena: casa_interior
+    camara: {pan: 6}
+    subtitulos_y: 0.80        # más abajo para no tapar el rincón
+    actores:
+      - sprite: xibalba/sombra
+        pos: [190, 302]
+    texto: "Pero los más inquietantes eran Ahalmez y Ahaltocob. Se escondían en los rincones sin barrer de las casas… para apuñalar a quien se acercara."
+
+  - escena: cueva
+    params: {resplandor: jade, calaveras: false, semilla: 4}
+    efectos: [ceniza]
+    camara: {pan: 8}
+    actores:
+      - murcielagos: {cantidad: 14, zona: [20, 30, 236, 200], tam: 2.2}
+      - ojos: {pos: [52, 262], color: [236, 190, 60], separacion: 6, tam: 2, aparece: 1.5}
+      - ojos: {pos: [206, 250], color: [236, 190, 60], separacion: 6, tam: 2, aparece: 2.5}
+    texto: "A sus visitantes los encerraban en casas de oscuridad, de frío, de jaguares, de navajas… y de murciélagos."
+
+  - escena: juego_pelota
+    efectos: [ceniza]
+    camara: {pan: 6}
+    actores:
+      - sprite: xibalba/gemelo
+        pos: [104, 372]
+      - sprite: xibalba/gemelo
+        pos: [152, 372]
+        espejo: true
+    texto: "Durante siglos nadie pudo vencerlos… hasta que dos hermanos bajaron a Xibalbá a jugar pelota contra la muerte. Pero esa historia… es para otra noche."

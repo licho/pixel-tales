@@ -1,0 +1,42 @@
+{
+  "ancla": [
+    20,
+    41
+  ],
+  "brillos": [
+    {
+      "pos": [
+        17,
+        8
+      ],
+      "color": [
+        255,
+        60,
+        36
+      ]
+    },
+    {
+      "pos": [
+        22,
+        8
+      ],
+      "color": [
+        255,
+        60,
+        36
+      ]
+    },
+    {
+      "pos": [
+        42,
+        1
+      ],
+      "color": [
+        255,
+        60,
+        36
+      ]
+    }
+  ],
+  "notas": "figura agazapada en la oscuridad; ojos y filo brillan"
+}

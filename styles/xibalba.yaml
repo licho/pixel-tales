@@ -1,0 +1,60 @@
+nombre: xibalba
+descripcion: Inframundo maya. Negro obsidiana, rojo sangre, hueso, ocre, jade apagado y naranja de antorcha.
+tramado: 12
+ambiente: [0.30, 0.22, 0.26]      # oscuridad rojiza
+primer_plano: 0.55
+ceniza: [104, 92, 84]
+brasa: [236, 150, 60]
+humo: [58, 46, 46]
+texto: [232, 220, 190]            # subtítulos color hueso
+acento: [196, 44, 32]             # título rojo sangre
+fuente_texto: PixelifySans-Bold.woff
+fuente_titulo: Silkscreen-Bold.woff
+paleta:
+  # obsidiana
+  - [5, 4, 6]
+  - [10, 8, 11]
+  - [15, 12, 15]
+  - [21, 16, 19]
+  - [28, 21, 24]
+  - [36, 27, 29]
+  - [46, 35, 35]
+  - [58, 45, 42]
+  # piedra fría
+  - [40, 40, 44]
+  - [58, 56, 58]
+  - [80, 76, 74]
+  - [104, 98, 92]
+  # sangre
+  - [44, 10, 10]
+  - [66, 14, 14]
+  - [92, 20, 18]
+  - [124, 28, 22]
+  - [160, 40, 28]
+  - [196, 60, 36]
+  # hueso
+  - [120, 108, 88]
+  - [156, 144, 116]
+  - [196, 184, 152]
+  - [230, 220, 190]
+  # ocre / tierra
+  - [64, 44, 24]
+  - [92, 64, 30]
+  - [128, 90, 40]
+  - [168, 122, 54]
+  # jade apagado
+  - [20, 36, 30]
+  - [30, 54, 44]
+  - [44, 78, 60]
+  - [70, 110, 80]
+  - [110, 150, 104]
+  # antorcha
+  - [140, 64, 24]
+  - [200, 104, 36]
+  - [236, 150, 60]
+  - [252, 204, 120]
+  - [255, 236, 190]
+  # pus
+  - [96, 92, 40]
+  - [136, 130, 60]
+  - [176, 166, 86]
