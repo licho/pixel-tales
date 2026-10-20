@@ -11,6 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from .actors import MovingSprite, Sprite, draw_bats, draw_eyes, draw_scorpions, draw_zombie, rim_light
 from .core import FORMATOS, S, Palette, ease, flicker
+from .multitud import Ejercito, dibuja_estandarte
 from .effects import Ash, Rain, Smoke, draw_flames
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -211,6 +212,10 @@ class PanelRenderer:
                 em += em_tmp
             elif "zombi" in act:
                 self.dyn.append((draw_zombie, act["zombi"]))
+            elif "ejercito" in act:
+                self.dyn.append((Ejercito(act["ejercito"], self.LW, self.LH), None))
+            elif "estandarte" in act:
+                self.dyn.append((dibuja_estandarte, act["estandarte"]))
             elif "murcielagos" in act:
                 self.dyn.append((draw_bats, act["murcielagos"]))
             elif "escorpiones" in act:

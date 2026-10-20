@@ -1,0 +1,106 @@
+# LOS EJÉRCITOS MÁS GRANDES DE LA ANTIGÜEDAD — reel vertical (~60 s). Sin voz todavía.
+# Coordenadas en pixeles de arte: vertical = 256 x 384 (la vista es 216 x 384). Horizonte 0.42 => y≈161.
+titulo: "Los ejércitos más grandes de la antigüedad"
+estilo: antiguo
+formato: vertical
+subtitulos: true
+
+paneles:
+  # 1. El río seco: un ejército a lo lejos
+  - escena: llanura
+    params: {hora: atardecer, rio_seco: true, sol_x: 0.55, niebla: 0.35}
+    efectos: [ceniza]
+    titulo: "LOS EJÉRCITOS MÁS GRANDES DE LA ANTIGÜEDAD"
+    camara: {pan: 8}
+    actores:
+      - ejercito: {zona: [0, 163, 256, 196], tipo: persa, alto_lejos: 1.4, alto_cerca: 6, avance: -3, semilla: 1}
+    texto: "Dicen que, a su paso, este ejército se bebía los ríos hasta dejarlos secos."
+
+  # 2. Jerjes cruza el Helesponto sobre puentes de barcos
+  - escena: llanura
+    params: {hora: atardecer, estrecho: [0.45, 0.86], puentes: [0.55, 0.70], sol_x: 0.3, montanas: true, niebla: 0.2}
+    efectos: [ceniza]
+    camara: {pan: 10}
+    actores:
+      - ejercito: {zona: [0, 207, 256, 210], tipo: persa, alto_lejos: 3.5, alto_cerca: 4, avance: -7, semilla: 2}
+      - ejercito: {zona: [0, 262, 256, 267], tipo: persa, alto_lejos: 7, alto_cerca: 8, avance: -9, semilla: 3}
+      - estandarte: {pos: [196, 384], alto: 96, ancho: 30, color: [70, 60, 120], color2: [190, 148, 64], simbolo: sol}
+    texto: "Era el de Jerjes, rey de Persia. Heródoto aseguró que eran más de cinco millones… y que cruzaron el mar sobre puentes hechos de barcos. Los historiadores de hoy creen que eran unos doscientos mil. Aun así, Grecia jamás había visto algo igual."
+
+  # 3. Chandragupta: elefantes de guerra entre el polvo
+  - escena: llanura
+    params: {hora: polvo, niebla: 0.45, semilla: 2}
+    efectos: [ceniza]
+    camara: {pan: 6}
+    actores:
+      - ejercito: {zona: [0, 163, 256, 230], tipo: indio, alto_lejos: 1.5, alto_cerca: 12, avance: 4, semilla: 5}
+      - sprite: antiguo/elefante
+        pos: [10, 262]
+        escala: 0.55
+        movimiento: [5, 0]
+      - sprite: antiguo/elefante
+        pos: [90, 266]
+        escala: 0.55
+        movimiento: [5, 0]
+      - sprite: antiguo/elefante
+        pos: [170, 264]
+        escala: 0.55
+        movimiento: [5, 0]
+      - sprite: antiguo/elefante
+        pos: [40, 350]
+        escala: 1.15
+        movimiento: [7, 0]
+        flota: 0.6
+      - sprite: antiguo/elefante
+        pos: [175, 356]
+        escala: 1.15
+        movimiento: [7, 0]
+        flota: 0.6
+    texto: "En la India, el emperador Chandragupta tenía, según las crónicas, seiscientos mil soldados… y nueve mil elefantes de guerra."
+
+  # 4. Wang Jian: el ejército Qin en bloques ante una ciudad amurallada
+  - escena: llanura
+    params: {hora: atardecer, ciudad: {x: 0.5, ancho: 0.7, alto: 0.035, tipo: china}, sol_x: 0.78, niebla: 0.3, semilla: 3}
+    camara: {pan: 6}
+    actores:
+      - ejercito: {zona: [0, 172, 256, 372], tipo: qin, alto_lejos: 2.5, alto_cerca: 38, avance: 0, marcha: false,
+                   bloques: [9, 3], estandartes: 6, densidad: 1.0, semilla: 6, bruma: [210, 140, 90]}
+    texto: "En China, el general Wang Jian pidió seiscientos mil hombres para conquistar un reino. Se los dieron. Un año después, ese reino ya no existía."
+
+  # 5. Changping: campo vacío, huesos y niebla
+  - escena: llanura
+    params: {hora: anochecer, huesos: true, lanzas_rotas: 14, niebla: 0.6, montanas: true, semilla: 4}
+    camara: {pan: 5}
+    texto: "Décadas antes, en Changping, más de cuatrocientos mil soldados rendidos fueron enterrados vivos. Todavía hoy aparecen huesos en esa tierra."
+
+  # 6. Roma: legionarios vigilando la muralla en la niebla
+  - escena: muralla_romana
+    params: {antorchas: 4, niebla: 0.6}
+    camara: {pan: 6}
+    subtitulos_y: 0.13
+    actores:
+      - sprite: antiguo/legionario
+        pos: [146, 194]
+        escala: 0.4
+      - sprite: antiguo/legionario
+        pos: [118, 252]
+        escala: 0.85
+      - sprite: antiguo/legionario
+        pos: [150, 376]
+        escala: 1.9
+        brillo: 0.8
+    texto: "Pero quizá el más temible fue Roma: medio millón de soldados profesionales, que servían hasta veinticinco años, vigilando una frontera que iba de Escocia hasta Siria."
+
+  # 7. Los cuatro estandartes en la tormenta
+  - escena: llanura
+    params: {hora: tormenta, niebla: 0.4, montanas: true, semilla: 5}
+    efectos: [relampago, lluvia]
+    lluvia: {cantidad: 120, viento: 0.3}
+    camara: {pan: 4}
+    actores:
+      - ejercito: {zona: [0, 163, 256, 215], tipo: qin, alto_lejos: 1.5, alto_cerca: 10, avance: 0, marcha: false, semilla: 7, bruma: [60, 54, 66]}
+      - estandarte: {pos: [16, 380], alto: 160, ancho: 40, color: [70, 60, 120], color2: [190, 148, 64], simbolo: sol, fase: 0}
+      - estandarte: {pos: [68, 372], alto: 150, ancho: 38, color: [236, 140, 62], color2: [232, 224, 200], simbolo: rueda, fase: 1.4}
+      - estandarte: {pos: [120, 376], alto: 156, ancho: 38, color: [26, 22, 24], color2: [164, 38, 30], simbolo: dragon, fase: 2.6}
+      - estandarte: {pos: [172, 384], alto: 166, ancho: 40, color: [164, 38, 30], color2: [190, 148, 64], simbolo: aguila, fase: 3.7}
+    texto: "Ejércitos tan grandes que cambiaron el mapa del mundo. Si pudieran enfrentarse… ¿cuál crees que ganaría?"

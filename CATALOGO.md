@@ -13,6 +13,7 @@ Formatos de marca: `cuadrado` (perfil 1080), `portada_fb` (1640x624), `banner_yt
 | `pixeltales` | Marca del canal: mezcla de survival y xibalba (portadas, piezas de marca) |
 | `nahual` | Terror mexicano nocturno: azul noche, bosque, niebla, sepia de fotos, lámpara ámbar, ojos dorados |
 | `oceano` | Tormenta en el mar: grises pizarra, azul acero, verde abisal, espuma, ojos amarillos, rayo violeta |
+| `antiguo` | Mundo antiguo épico: atardecer naranja, ocre/polvo, bronce, rojo legionario, negro Qin, azul persa, hueso. `ceniza` = polvo dorado |
 
 ## Escenas / fondos (`scenes/`)
 Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = horizontal.
@@ -32,6 +33,8 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `lago` | todos | Lago con montañas, bosque y niebla | `vista` (orilla/aerea), `hora` (anochecer/noche), `isla`, `niebla` | orilla: lancha (0.45 W, 0.93 H); aérea: lancha escala ~0.6 en x 0.4-0.6 W |
 | `mar_tormenta` | todos | Mar en tormenta: nubes, cortinas de lluvia, olas animadas con espuma, niebla, rayo (con `relampago`). Las olas tapan a los actores según su profundidad | `horizonte`, `olas` (0.2 calma – 1.5 fuerte), `claro` [x,y], `niebla`, `espuma` [[x,y,ancho]...] (salpicaduras), `semilla` | barco (0.35 W, 0.86-0.9 H) con `flota` y `balanceo`; criatura (0.5 W, 0.78-0.86 H) |
 | `imagen` | todos | Usa una imagen (ej. de IA) como fondo y la pasa por la paleta del estilo; encima funcionan lluvia, relámpago, ojos, zoom… Sin parallax ni olas animadas | `archivo` (ruta en el repo, ej. `fondos/...`), `foco` [x,y], `brillo` | coordenadas = píxeles de la capa |
+| `llanura` | todos | Llanura del mundo antiguo: cielo, sol bajo, montañas, polvo; extras: cauce seco, estrecho de mar con puentes de barcos, ciudad amurallada (china), campo de huesos y lanzas rotas | `hora` (atardecer/polvo/anochecer/noche/tormenta), `horizonte` (0.42), `sol`, `sol_x`, `montanas`, `rio_seco`, `estrecho` [y0,y1], `puentes` [y...], `ciudad` {x,ancho,alto,tipo}, `huesos`, `lanzas_rotas` (n), `niebla`, `semilla` | horizonte y≈0.42 H; ejército en suelo zona [0, 0.43H, W, 0.97H]; sobre puente en y=f·H: zona [0, yb-3, W, yb] con alto 4-8; elefantes cerca (x, 0.92 H, escala ~1.1), lejos (0.69 H, escala 0.55); estandartes pos [x, 0.97 H] alto 150-165 (la tela queda arriba del subtítulo) |
+| `muralla_romana` | H, V | Muralla de frontera de noche: adarve que se aleja, parapeto con almenas, antorchas, luna, colinas y niebla | `antorchas` (n), `niebla`, `luna`, `semilla` | legionarios: lejos (0.57 W, 0.505 H, esc 0.4), medio (0.46 W, 0.66 H, esc 0.85), cerca (0.59 W, 0.98 H, esc 1.9) — usar `subtitulos_y: 0.13` si el de cerca tapa el texto |
 | `juego_pelota` | H, V | Cancha de pelota de noche, aros, templos, luna | `aros`, `antorchas`, `luna`, `semilla` | dos personajes (0.40 W, 0.97 H) y (0.60 W, 0.97 H) |
 
 ## Sprites (`sprites/`)
@@ -56,6 +59,8 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `nahual/lancha_aerea` | Lancha vista desde arriba con el chico tendido | 70 px |
 | `nahual/sombra_agua` | Sombra de jaguar bajo el agua (vista desde arriba) | 90 px |
 | `oceano/primigenio` | Criatura colosal alada con tentáculos, ojos amarillos que brillan; ancla = línea del agua (ancho 270) | 192 px |
+| `antiguo/elefante` | Elefante de guerra con armadura roja, torre (howdah) con soldados, mira a la derecha (ancho 96) | 84 px |
+| `antiguo/legionario` | Legionario romano: lorica, scutum rojo, pilum, cresta; mira a la derecha | 64 px |
 | `oceano/pesquero` | Barco pesquero, proa a la derecha, farol encendido; ancla = línea del agua | 50 px |
 
 ## Actores animados
@@ -65,6 +70,8 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `murcielagos` | `cantidad`, `zona: [x0,y0,x1,y1]`, `tam`, `semilla` |
 | `escorpiones` | `cantidad`, `zona: [x0,y0,x1,y1]`, `tam`, `semilla` |
 | `ojos` | `pos`, `color` (default rojo), `separacion`, `tam`, `aparece` (segundo) — brillan en la oscuridad |
+| `ejercito` | Miles de soldados en perspectiva: `zona` [x0, y_lejos, x1, y_cerca], `tipo` (persa/qin/romano/indio), `alto_lejos`, `alto_cerca` (px), `avance` (px/seg, + derecha, 0 = quietos), `marcha`, `bloques` [soldados, hueco], `estandartes` (cada N), `densidad`, `bruma` [rgb], `poligono` (recorte), `semilla` |
+| `estandarte` | Bandera que ondea: `pos` (pie del asta), `alto`, `ancho`, `color`, `color2`, `simbolo` (sol/rueda/dragon/aguila/nada), `fase` |
 | sprite en sombra | cualquier `sprite` con `brillo: 0.5` (más oscuro; sus ojos siguen brillando) y `contraluz: false` |
 | sprite animado | cualquier `sprite` con `aparece`, `desaparece` (seg), `movimiento: [dx, dy]` (px/seg), `flota` (px) o `balanceo` (grados) |
 
