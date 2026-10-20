@@ -3,12 +3,14 @@
 Todo lo disponible para armar episodios. **Mantener este archivo corto y al día**: es lo único que hace falta leer para escribir un episodio nuevo.
 
 Tamaño de capa (coordenadas de actores): **horizontal 424 x 216** · **vertical 256 x 384** (la cámara ve 384x216 / 216x384).
+Formatos de marca: `cuadrado` (perfil 1080), `portada_fb` (1640x624), `banner_yt` (2560x1440) — ver `tools/portada.py`.
 
 ## Estilos (`styles/`)
 | Nombre | Look |
 |---|---|
 | `survival` | Noche postapocalíptica: teal oscuro, carbón, ámbar de fuego, amarillo de traje |
 | `xibalba` | Inframundo maya: obsidiana, rojo sangre, hueso, ocre, jade apagado, antorcha |
+| `pixeltales` | Marca del canal: mezcla de survival y xibalba (portadas, piezas de marca) |
 
 ## Escenas / fondos (`scenes/`)
 Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = horizontal.
@@ -20,6 +22,7 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `rio` | H, V | Río subterráneo serpenteando (también lago/río normal) | `agua` (sangre/pus/agua/noche/[rgb]), `brillo`, `antorcha`, `semilla` | orillas x 0.02-0.28 W y 0.72-0.98 W, y 0.75-0.97 H |
 | `salon_tronos` | H, V | Templo: plataforma con 2 tronos, mascarón, tzompantli, braseros | `tronos`, `tzompantli`, `braseros`, `semilla` | tronos (0.40 W, 0.535 H) y (0.60 W, 0.535 H); piso x 0.15-0.85 W, y 0.74-0.95 H |
 | `casa_interior` | H, V | Casa maya de noche: palma, bajareque, puerta con luna, hamaca, fogón | `fogon`, `puerta_luna`, `hamaca`, `rincon_oscuro`, `semilla` | rincón oscuro (0.74 W, 0.79 H); piso x 0.10-0.80 W, y 0.80-0.97 H |
+| `panorama` | todos | Marca: ciudad en ruinas, pirámide bajo luna roja, bosque, fogata | `horizonte` (0-1), `escala` (px), `luna_roja`, `fogata` | ver `tools/portada.py` |
 | `juego_pelota` | H, V | Cancha de pelota de noche, aros, templos, luna | `aros`, `antorchas`, `luna`, `semilla` | dos personajes (0.40 W, 0.97 H) y (0.60 W, 0.97 H) |
 
 ## Sprites (`sprites/`)

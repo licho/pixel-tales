@@ -15,6 +15,9 @@ S = 5
 FORMATOS = {
     "horizontal": (424, 216, 384, 216),   # 1920x1080
     "vertical": (256, 384, 216, 384),     # 1080x1920 (reels)
+    "cuadrado": (232, 216, 216, 216),     # 1080x1080 (foto de perfil)
+    "portada_fb": (344, 125, 328, 125),   # 1640x625 (portada de Facebook, se recorta a 1640x624)
+    "banner_yt": (528, 288, 512, 288),    # 2560x1440 (banner de YouTube)
 }
 
 _BAYER = (np.array([[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]], np.float32) + 0.5) / 16 - 0.5
