@@ -1,6 +1,6 @@
 """Genera los sprites de la serie del océano en sprites/oceano/.
 
-  primigenio   criatura colosal alada con tentáculos (estilo Cthulhu de Lovecraft, 1928, dominio público)
+  (primigenio: versión vieja; la actual está en tools/sprite_primigenio.py)
   pesquero     barco pesquero de arrastre (proa a la derecha), con farol encendido
 
 Colores base sin luz; la escena los ilumina. Los ojos y el farol brillan solos ('brillos' en el .json).
@@ -269,5 +269,5 @@ def pesquero():
 
 
 if __name__ == "__main__":
-    primigenio()
+    # la criatura ahora se genera con tools/sprite_primigenio.py (versión con volumen)
     pesquero()

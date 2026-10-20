@@ -55,7 +55,8 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `nahual/lancha` | Lancha de madera de lado (ancla = línea del agua) | 26 px |
 | `nahual/lancha_aerea` | Lancha vista desde arriba con el chico tendido | 70 px |
 | `nahual/sombra_agua` | Sombra de jaguar bajo el agua (vista desde arriba) | 90 px |
-| `oceano/primigenio` | Criatura colosal alada con tentáculos, ojos amarillos que brillan; ancla = línea del agua (ancho 270) | 192 px |
+| `oceano/primigenio` | Criatura colosal alada con tentáculos, con volumen y piel mojada, ojos que brillan; ancla = línea del agua (ancho 270). Para horizontal | 192 px |
+| `oceano/primigenio_xl` | La misma a escala 1.3 (ancho 351), para vertical sin perder detalle | 250 px |
 | `oceano/pesquero` | Barco pesquero, proa a la derecha, farol encendido; ancla = línea del agua | 50 px |
 
 ## Actores animados

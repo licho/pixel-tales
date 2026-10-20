@@ -10,8 +10,7 @@ paneles:
     camara: {pan: 4}
     actores:
       - sprite: oceano/primigenio
-        pos: [214, 186]
-        escala: 0.92
+        pos: [214, 197]
         contraluz: false
       - sprite: oceano/pesquero
         pos: [120, 196]

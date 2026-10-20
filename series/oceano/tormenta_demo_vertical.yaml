@@ -9,9 +9,8 @@ paneles:
     lluvia: {cantidad: 380, viento: -0.18, largo: 1.7, salpicaduras: false}
     camara: {pan: 0}
     actores:
-      - sprite: oceano/primigenio
-        pos: [134, 300]
-        escala: 1.3
+      - sprite: oceano/primigenio_xl
+        pos: [134, 304]
         contraluz: false
       - sprite: oceano/pesquero
         pos: [80, 330]
