@@ -8,6 +8,11 @@ El usuario es Luis; respóndele en español y con explicaciones sencillas.
 - Revisa resultados con `python render.py <episodio> --fotos` (una imagen por panel, tarda segundos) antes de renderizar el video.
 - Abre `pixel_tales/` o `scenes/*.py` solo si hay que crear algo nuevo o corregir un error.
 
+## Flujo con ilustraciones de Gemini (preferido para personajes y escenas con detalle)
+- Escribe un prompt por panel (estilo fijo al final, vertical 9:16, tercio inferior libre). Ejemplo: `series/nahuales/el_doble_prompts_gemini.md`.
+- Luis genera las imágenes y las adjunta; guárdalas en `fondos/<serie>/<episodio>/panelNN.png` y usa la escena `imagen`.
+- Ubica ojos/luces en píxeles de la imagen original (recorta con una cuadrícula para medir).
+
 ## Al crear piezas nuevas
 - Escena nueva: `scenes/<nombre>.py` con `class Escena(Scene)` (ver docstring de `pixel_tales/scene.py`). Pinta a 424x216 con colores "reales"; la paleta del estilo se aplica sola.
 - Sprite nuevo: PNG RGBA con colores base (sin luz) en `sprites/<serie>/`, y un `.json` con `{"ancla": [x_pies, y_pies]}`. Si se genera con código, guarda el script en `tools/`.

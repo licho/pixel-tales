@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from .actors import MovingSprite, Sprite, draw_bats, draw_eyes, draw_scorpions, draw_zombie, rim_light
 from .core import FORMATOS, S, Palette, ease, flicker
-from .effects import Ash, Rain, Smoke, draw_flames
+from .effects import Ash, Fog, Rain, Smoke, draw_flames
 
 ROOT = Path(__file__).resolve().parent.parent
 FADE = 0.35
@@ -227,6 +227,7 @@ class PanelRenderer:
         self.fg_a = hup(sc.fg_a)
         self.rain = Rain(self.VW, self.VH, **panel.get("lluvia", {})) if "lluvia" in ef else None
         self.ash = Ash(self.VW, self.VH) if "ceniza" in ef else None
+        self.fog = Fog(self.LW, self.LH, panel["niebla"]) if panel.get("niebla") else None
 
     def mid_layer(self, t, fi, flash=False):
         LW, LH = self.LW, self.LH
@@ -260,9 +261,12 @@ class PanelRenderer:
             self.sc.depth = self.depth0
         col = alb * light + em + extra
         self.sc.flash = flash
+        self.sc.light = light
         extra_a = self.sc.animar(col, t)
         if isinstance(extra_a, np.ndarray):
             a = a | extra_a
+        if self.fog is not None:
+            self.fog.apply(col, t)
         for sm in self.smokes:
             sm.apply(col, t)
         rgb = self.style.palette.quantize(col)
@@ -270,10 +274,16 @@ class PanelRenderer:
         for i, f in enumerate(self.fires):
             draw_flames(rgb, a, f, flicker("fuego", t, i * 2.3), fi)
         for i, e in enumerate(self.eyes):
+            if hasattr(self.sc, "mapear"):           # ojos en píxeles de la imagen original
+                x, y = e["pos"]
+                sep = e.get("separacion", 4)
+                l, r = self.sc.mapear((x - sep / 2, y), t), self.sc.mapear((x + sep / 2, y), t)
+                e = {**e, "pos": [(l[0] + r[0]) / 2, (l[1] + r[1]) / 2], "separacion": r[0] - l[0]}
             draw_eyes(rgb, a, e, t, i)
         return rgb, a
 
     def frame(self, t, dur, fi):
+        self.sc.dur_panel = dur
         e = ease(t / dur)
         lt = (t - dur * 0.55) % 7.3
         flash = self.relampago and (0 < lt < 0.1 or 0.2 < lt < 0.26)

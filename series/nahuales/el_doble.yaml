@@ -1,4 +1,4 @@
-# EL DOBLE — reel vertical (~60 s). Guion de Luis.
+# EL DOBLE — reel vertical (~60 s). Guion de Luis. Ilustraciones: Gemini (fondos/nahuales/el_doble/) + efectos del motor.
 # Voces (pendientes): NARRADOR, CHICO (voz en off / susurro) y VOZ (el doble, misma voz del chico).
 # Coordenadas en pixeles de arte: vertical = 256 x 384 (la vista es 216 x 384).
 titulo: "El doble"
@@ -7,164 +7,209 @@ formato: vertical
 subtitulos: true
 
 paneles:
-  # [0:00–0:06] LA CREENCIA
-  - escena: negro
-    params: {niebla: true}
-    titulo: "EL DOBLE"
-    camara: {pan: 0}
-    actores:
-      - ojos: {pos: [128, 190], color: [240, 200, 70], separacion: 10, tam: 2, aparece: 1.2}
-    texto: "En algunas comunidades de México existe una creencia inquietante: que una persona puede tener un doble animal."   # NARRADOR
-
-  - escena: foto_mesa
-    params: {contenido: hombre_jaguar}
-    efectos: [ceniza]
-    camara: {pan: 4}
-    texto: "Y que lo que le suceda a uno… puede destruir al otro."   # NARRADOR
-
-  # [0:07–0:16] LA INVESTIGACIÓN
-  - escena: archivo
-    camara: {pan: 6}
-    actores:
-      - sprite: nahual/chico_escritorio
-        pos: [133, 360]
-        escala: 1.3
-    texto: "Llevaba meses investigando los relatos sobre nahuales. Creía que eran supersticiones…"   # CHICO
-
-  - escena: foto_mesa
-    params: {contenido: abuelo, giro: 2, semilla: 3}
-    camara: {pan: 4}
-    texto: "…hasta que encontré una fotografía de mi abuelo."   # CHICO
-
-  - escena: foto_mesa
-    params: {contenido: reverso, texto: "12 · agosto · 1961|Lago de la montaña|(no regreses)", giro: -3, semilla: 3}
-    camara: {pan: 3}
-    duracion: 3.0
-
-  # [0:17–0:26] LA PRUEBA
-  - escena: bosque
-    params: {hora: tarde, huellas: true}
-    camara: {pan: 8}
-    actores:
-      - sprite: nahual/chico_camara
-        pos: [70, 372]
-        escala: 1.5
-    duracion: 3.5
-
-  - escena: bosque
-    params: {hora: tarde, huellas: true, semilla: 2}
-    efectos: [grabacion]
-    grabacion_inicio: 754
-    camara: {pan: 4}
-    actores:
-      - sprite: nahual/jaguar
-        pos: [168, 248]
-        escala: 0.6
-        aparece: 1.6
-        desaparece: 2.2
-      - ojos: {pos: [154, 238], color: [240, 200, 70], separacion: 2, tam: 1, aparece: 1.6}
-    duracion: 3.5
-
-  - escena: bosque               # la grabación congelada, con zoom digital al jaguar
-    params: {hora: tarde, huellas: true, semilla: 2}
-    efectos: [pausa]
-    congelado: true
-    grabacion_inicio: 756
-    camara: {pan: 0}
-    zoom: {centro: [70, 224], factor: 2.5, factor_final: 4.5}
-    subtitulos_y: 0.86
-    actores:
-      - sprite: nahual/jaguar_asomado
-        pos: [67, 240]
-        brillo: 0.5
-        contraluz: false
-    texto: "No puede ser…"   # CHICO (susurrando)
-    duracion: 3.0
-
-  # [0:27–0:37] EL LLAMADO
-  - escena: lago
-    params: {vista: orilla, hora: anochecer}
-    camara: {pan: 6}
-    actores:
-      - sprite: nahual/lancha
-        pos: [128, 356]
-        escala: 1.1
-      - sprite: nahual/chico_camara
-        pos: [40, 378]
-        escala: 1.3
-    duracion: 4.0
-
-  - escena: foto_mesa
-    params: {contenido: bebe, superficie: lancha, giro: 5}
-    camara: {pan: 3}
-    actores:
-      - ojos: {pos: [159, 146], color: [240, 200, 70], separacion: 3, tam: 1, aparece: 1.0}
-    texto: "Por fin llegaste."   # VOZ (la del chico, desde el bosque)
-
-  - escena: bosque
-    params: {hora: noche, semilla: 5}
-    camara: {pan: 4}
-    actores:
-      - sprite: nahual/nahual_silueta
-        pos: [128, 250]
-        escala: 0.9
-        aparece: 0.8
-    duracion: 3.0
-
-  - escena: negro
-    duracion: 1.0      # corte a negro: grito ahogado
-
-  # [0:38–0:50] EL VIAJE
-  - escena: lago
-    params: {vista: aerea, hora: noche}
-    camara: {pan: 0}
-    actores:
-      - sprite: nahual/sombra_agua
-        pos: [126, 420]
-        escala: 0.9
-        movimiento: [0, -14]
-        aparece: 0.01
-      - sprite: nahual/lancha_aerea
-        pos: [128, 360]
-        escala: 0.6
-        movimiento: [0, -14]
-        aparece: 0.01
-    duracion: 9.0      # ningún motor, ningún remo: solo algo respirando
-
-  # [0:51–1:00] EL DOBLE
-  - escena: bosque
-    params: {hora: noche, orilla: true, semilla: 7}
-    camara: {pan: 4}
-    actores:
-      - sprite: nahual/lancha
-        pos: [118, 378]
-        escala: 1.2
-      - sprite: nahual/chico_tendido
-        pos: [118, 366]
-        escala: 1.1
-      - sprite: nahual/chico_doble
-        pos: [150, 252]
-        escala: 0.8
-    texto: "Él creía que estaba buscando a los nahuales…"   # NARRADOR (susurrando)
-
-  - escena: bosque
-    params: {hora: noche, orilla: true, semilla: 7}
-    camara: {pan: 6}
-    actores:
-      - sprite: nahual/lancha
-        pos: [118, 378]
-        escala: 1.2
-      - sprite: nahual/chico_tendido
-        pos: [118, 366]
-        escala: 1.1
-      - sprite: nahual/doble_cuatro_patas
-        pos: [150, 252]
-        escala: 0.75
-        movimiento: [12, -2]
-        aparece: 0.01
-    texto: "Pero su doble llevaba toda la vida buscándolo a él."   # NARRADOR
-
-  - escena: negro
-    actores:
-      - ojos: {pos: [128, 190], color: [240, 200, 70], separacion: 10, tam: 2, aparece: 0.6}
-    duracion: 2.5      # último sonido: rugido de jaguar
+- escena: negro
+  params: {niebla: true}
+  titulo: EL DOBLE
+  camara: {pan: 0}
+  actores:
+  - ojos:
+      pos: [128, 190]
+      color: [240, 200, 70]
+      separacion: 10
+      tam: 2
+      aparece: 1.2
+  texto: 'En algunas comunidades de México existe una creencia inquietante: que una persona puede tener un doble animal.'
+- escena: imagen
+  params:
+    archivo: fondos/nahuales/el_doble/panel02.png
+    zoom: [1.0, 1.12]
+    foco: [0.5, 0.42]
+    luces:
+    - pos: [286, 40]
+      radio: 320
+      intensidad: 0.35
+      color: [255, 190, 120]
+      parpadeo: farol
+  camara: {pan: 0}
+  efectos: [ceniza]
+  texto: Y que lo que le suceda a uno… puede destruir al otro.
+- escena: imagen
+  params:
+    archivo: fondos/nahuales/el_doble/panel03.png
+    zoom: [1.0, 1.12]
+    foco: [0.5, 0.45]
+    foco_final: [0.58, 0.42]
+    luces:
+    - pos: [352, 295]
+      radio: 130
+      intensidad: 0.45
+      color: [255, 180, 110]
+      parpadeo: farol
+  camara: {pan: 0}
+  texto: Llevaba meses investigando los relatos sobre nahuales. Creía que eran supersticiones…
+- escena: imagen
+  params:
+    archivo: fondos/nahuales/el_doble/panel04.png
+    zoom: [1.0, 1.3]
+    foco: [0.5, 0.42]
+    foco_final: [0.72, 0.39]
+  camara: {pan: 0}
+  actores:
+  - ojos:
+      pos: [429, 390]
+      separacion: 8
+      color: &id001 [240, 200, 70]
+      aparece: 1.5
+  texto: …hasta que encontré una fotografía de mi abuelo.
+- escena: foto_mesa
+  params: {contenido: reverso, texto: 12 · agosto · 1961|Lago de la montaña|(no regreses), giro: -3, semilla: 3}
+  camara: {pan: 3}
+  duracion: 3.0
+- escena: imagen
+  params:
+    archivo: fondos/nahuales/el_doble/panel06.png
+    zoom: [1.05, 1.18]
+    foco: [0.45, 0.45]
+    foco_final: [0.55, 0.58]
+  camara: {pan: 0}
+  niebla:
+    y: [0.2, 0.55]
+    densidad: 0.3
+    velocidad: 5
+    color: [150, 130, 110]
+  duracion: 3.5
+- escena: imagen
+  params:
+    archivo: fondos/nahuales/el_doble/panel07a.png
+    alternativa:
+      archivo: fondos/nahuales/el_doble/panel07b.png
+      intervalos:
+      - [1.5, 2.3]
+  camara: {pan: 0}
+  efectos: [grabacion]
+  grabacion_inicio: 754
+  niebla:
+    y: [0.2, 0.55]
+    densidad: 0.25
+    velocidad: 6
+    color: [150, 130, 110]
+  duracion: 3.5
+- escena: imagen
+  params: {archivo: fondos/nahuales/el_doble/panel08.png}
+  camara: {pan: 0}
+  efectos: [pausa]
+  congelado: true
+  grabacion_inicio: 756
+  subtitulos_y: 0.86
+  texto: No puede ser…
+  duracion: 3.0
+  zoom:
+    centro: [116, 165]
+    factor: 1.0
+    factor_final: 1.35
+- escena: imagen
+  params:
+    archivo: fondos/nahuales/el_doble/panel09.png
+    zoom: [1.0, 1.12]
+    foco: [0.5, 0.45]
+    foco_final: [0.45, 0.5]
+  camara: {pan: 0}
+  niebla:
+    y: [0.28, 0.6]
+    densidad: 0.45
+    velocidad: 3
+    color: [120, 130, 140]
+  duracion: 4.0
+- escena: imagen
+  params:
+    archivo: fondos/nahuales/el_doble/panel10.png
+    zoom: [1.0, 1.18]
+    foco: [0.5, 0.42]
+    foco_final: [0.45, 0.38]
+  camara: {pan: 0}
+  actores:
+  - ojos:
+      pos: [234, 343]
+      separacion: 15
+      color: *id001
+      aparece: 1.0
+  texto: Por fin llegaste.
+- escena: imagen
+  params:
+    archivo: fondos/nahuales/el_doble/panel11.png
+    zoom: [1.0, 1.35]
+    foco: [0.5, 0.35]
+    foco_final: [0.5, 0.34]
+  camara: {pan: 0}
+  actores:
+  - ojos:
+      pos: [287, 352]
+      separacion: 18
+      color: *id001
+      aparece: 0.8
+  niebla:
+    y: [0.55, 0.85]
+    densidad: 0.4
+    velocidad: 4
+    color: [110, 125, 140]
+  duracion: 3.0
+- {escena: negro, duracion: 1.0}
+- escena: imagen
+  params:
+    archivo: fondos/nahuales/el_doble/panel13.png
+    zoom: [1.3, 1.0]
+    foco: [0.5, 0.5]
+    foco_final: [0.5, 0.42]
+  camara: {pan: 0}
+  niebla:
+    y: [0.0, 0.55]
+    densidad: 0.35
+    velocidad: 5
+    color: [110, 120, 135]
+  duracion: 9.0
+- escena: imagen
+  params:
+    archivo: fondos/nahuales/el_doble/panel14.png
+    zoom: [1.0, 1.22]
+    foco: [0.55, 0.45]
+    foco_final: [0.66, 0.38]
+  camara: {pan: 0}
+  actores:
+  - ojos:
+      pos: [405, 343]
+      separacion: 12
+      color: *id001
+      aparece: 1.2
+  niebla:
+    y: [0.35, 0.7]
+    densidad: 0.3
+    velocidad: 3
+    color: [110, 125, 140]
+  texto: Él creía que estaba buscando a los nahuales…
+- escena: imagen
+  params:
+    archivo: fondos/nahuales/el_doble/panel15.png
+    zoom: [1.1, 1.3]
+    foco: [0.62, 0.4]
+    foco_final: [0.7, 0.37]
+  camara: {pan: 0}
+  actores:
+  - ojos:
+      pos: [436, 371]
+      separacion: 14
+      color: *id001
+  niebla:
+    y: [0.35, 0.7]
+    densidad: 0.3
+    velocidad: 3
+    color: [110, 125, 140]
+  texto: Pero su doble llevaba toda la vida buscándolo a él.
+- escena: negro
+  actores:
+  - ojos:
+      pos: [128, 190]
+      color: [240, 200, 70]
+      separacion: 10
+      tam: 2
+      aparece: 0.6
+  duracion: 2.5

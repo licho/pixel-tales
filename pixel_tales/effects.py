@@ -100,3 +100,27 @@ class Smoke:
             m = np.exp(-((xx[ya:yb, xa:xb] - sx) ** 2 + (yy[ya:yb, xa:xb] - sy) ** 2) / (2 * rr ** 2))
             m = (m * (1 - age / 3.0) * 0.32)[..., None]
             col[ya:yb, xa:xb] = col[ya:yb, xa:xb] * (1 - m) + self.color * m
+
+
+class Fog:
+    """Niebla que se desliza despacio sobre la capa principal (se mezcla antes de la paleta).
+    cfg: {y: [y0, y1] relativos, densidad: 0-1, velocidad: px/seg, color: [r, g, b], escala: celdas}"""
+
+    def __init__(self, w, h, cfg, seed=9):
+        from .core import fbm
+        self.w, self.h = w, h
+        self.y0, self.y1 = cfg.get("y", [0.3, 0.8])
+        self.dens = float(cfg.get("densidad", 0.5))
+        self.vel = float(cfg.get("velocidad", 4))
+        self.col = np.array(cfg.get("color", [110, 120, 130]), np.float32)
+        c = int(cfg.get("escala", 24))
+        self.n = fbm(w * 2, h, seed, (c * 2, c, max(2, c // 2)))
+        yy = np.arange(h, dtype=np.float32)[:, None] / h
+        mid, half = (self.y0 + self.y1) / 2, max((self.y1 - self.y0) / 2, 0.01)
+        self.band = np.clip(1 - np.abs(yy - mid) / half, 0, 1) ** 0.8
+
+    def apply(self, col, t):
+        off = int(t * self.vel) % self.w
+        n = self.n[:, off:off + self.w]
+        k = np.clip((n - 0.35) * 1.8, 0, 1) * self.band * self.dens
+        col[:] = col * (1 - k[..., None]) + self.col * k[..., None]

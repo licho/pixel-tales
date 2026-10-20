@@ -31,7 +31,7 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `bosque` | todos | Bosque con sendero de lodo y niebla | `hora` (tarde/noche), `niebla`, `huellas`, `orilla` (agua abajo), `semilla` | sendero cerca (0.5 W, 0.95 H); entre árboles x 0.25-0.75 W, y 0.62-0.66 H; lancha (0.45 W, 0.97 H) con orilla |
 | `lago` | todos | Lago con montañas, bosque y niebla | `vista` (orilla/aerea), `hora` (anochecer/noche), `isla`, `niebla` | orilla: lancha (0.45 W, 0.93 H); aérea: lancha escala ~0.6 en x 0.4-0.6 W |
 | `mar_tormenta` | todos | Mar en tormenta: nubes, cortinas de lluvia, olas animadas con espuma, niebla, rayo (con `relampago`). Las olas tapan a los actores según su profundidad | `horizonte`, `olas` (0.2 calma – 1.5 fuerte), `claro` [x,y], `niebla`, `espuma` [[x,y,ancho]...] (salpicaduras), `semilla` | barco (0.35 W, 0.86-0.9 H) con `flota` y `balanceo`; criatura (0.5 W, 0.78-0.86 H) |
-| `imagen` | todos | Usa una imagen (ej. de IA) como fondo y la pasa por la paleta del estilo; encima funcionan lluvia, relámpago, ojos, zoom… Sin parallax ni olas animadas | `archivo` (ruta en el repo, ej. `fondos/...`), `foco` [x,y], `brillo` | coordenadas = píxeles de la capa |
+| `imagen` | todos | Ilustración (ej. de Gemini) como fondo, pasada por la paleta del estilo; con zoom/paneo lento, imagen alterna y luces que parpadean. Encima: lluvia, relámpago, niebla, ojos, cámara… | `archivo`, `zoom` [inicio, fin], `foco` [x,y] y `foco_final` (0-1), `alternativa` {archivo, intervalos}, `luces` [{pos, radio, color, intensidad, parpadeo}], `brillo` | `ojos` y `luces` en PÍXELES DE LA IMAGEN ORIGINAL (siguen al zoom); usa `camara: {pan: 0}` |
 | `juego_pelota` | H, V | Cancha de pelota de noche, aros, templos, luna | `aros`, `antorchas`, `luna`, `semilla` | dos personajes (0.40 W, 0.97 H) y (0.60 W, 0.97 H) |
 
 ## Sprites (`sprites/`)
@@ -77,6 +77,7 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `parpadeo` | El farol de la `calle` falla de vez en cuando |
 | `grabacion` | Interfaz de cámara de video: esquinas, REC parpadeando, contador (`grabacion_inicio` en seg) |
 | `pausa` | Igual pero en PAUSA; combínalo con `congelado: true` en el panel para detener la animación |
+| *(panel)* `niebla` | `niebla: {y: [0.3, 0.7], densidad: 0.4, velocidad: 4, color: [r,g,b]}` niebla que se desliza sobre la imagen o escena |
 | *(panel)* `zoom` | `zoom: {centro: [x, y], factor: 3, factor_final: 5}` zoom digital pixelado (con acercamiento lento opcional) |
 | *(automático)* | Fuego animado con humo; antorchas parpadean; contraluz en personajes cerca de fuego |
 
