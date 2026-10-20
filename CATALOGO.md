@@ -56,6 +56,7 @@ estilo: xibalba
 formato: vertical          # o horizontal (default)
 subtitulos: true           # default true en vertical
 voz: ep01.mp3              # opcional; reparte el audio entre paneles según su texto
+palabras: ep01.palabras.json  # opcional; tiempos por palabra de ElevenLabs -> cortes y subtítulos exactos
 paneles:
   - escena: cueva
     params: {resplandor: jade}

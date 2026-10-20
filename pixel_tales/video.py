@@ -264,6 +264,40 @@ def plan_durations(ep, voz):
     return [d if d is not None else rest * next(it) / wsum for d in fixed]
 
 
+def sync_words(ep, words_path, audio_len):
+    """Con los tiempos por palabra (JSON de ElevenLabs), calcula la duración exacta de cada panel
+    y el momento en que aparece cada subtítulo. Devuelve (duraciones, [[(t0, t1, texto)...] por panel])
+    o None si el texto no coincide con la transcripción."""
+    data = json.loads(Path(words_path).read_text(encoding="utf-8"))
+    words = [w for w in (data.get("words", data) if isinstance(data, dict) else data) if w.get("type", "word") == "word"]
+    panels = ep["paneles"]
+    counts = [len(p.get("texto", "").split()) for p in panels]
+    if sum(counts) != len(words):
+        print(f"Aviso: el texto tiene {sum(counts)} palabras y el audio {len(words)}; uso reparto aproximado.")
+        return None
+    LEAD = 0.25                                   # el panel cambia un poco antes de su primera palabra
+    starts, i = [], 0
+    for c in counts:
+        starts.append(words[i]["start"] if c else (starts[-1] if starts else 0.0))
+        i += c
+    bounds = [0.0] + [max(0.0, s - LEAD) for s in starts[1:]] + [max(audio_len, words[-1]["end"] + 0.8)]
+    durs = [b - a for a, b in zip(bounds, bounds[1:])]
+    subs, i = [], 0
+    for k, (p, c) in enumerate(zip(panels, counts)):
+        pw = words[i:i + c]
+        i += c
+        out, j = [], 0
+        cs = chunks(p.get("texto", ""))
+        for n, ch in enumerate(cs):
+            m = len(ch.split())
+            t0 = pw[j]["start"] - bounds[k]
+            t1 = (pw[j + m]["start"] - bounds[k]) if j + m < len(pw) else durs[k] - 0.2
+            out.append((t0, t1, ch))
+            j += m
+        subs.append(out)
+    return durs, subs
+
+
 def subtitle_at(texto, t, dur):
     cs = chunks(texto)
     if not cs:
@@ -294,15 +328,26 @@ def render_episode(ep_path, out=None, fps=24, solo_panel=None, fotos=False):
         print(f"Aviso: no encontré la voz {voz}; estimo duraciones por el texto.")
         voz = None
     durs = plan_durations(ep, voz)
+    timed = None
+    if voz is not None and ep.get("palabras"):
+        wp = ep_path.parent / ep["palabras"]
+        if wp.exists():
+            res = sync_words(ep, wp, audio_duration(voz))
+            if res:
+                durs, timed = res
+                print("Sincronizado por palabras.")
     out_dir = ROOT / "output"
     out_dir.mkdir(exist_ok=True)
     name = f"{ep_path.parent.name}_{ep_path.stem}"
 
-    def overlay(img, panel, t, dur):
+    def overlay(img, panel, t, dur, idx=None):
         if panel.get("titulo"):
             texts.title(img, panel["titulo"], t)
         if subs:
-            s = subtitle_at(panel.get("texto", ""), t, dur)
+            if timed is not None and idx is not None:
+                s = next((c for a, b, c in timed[idx] if a <= t < b), None)
+            else:
+                s = subtitle_at(panel.get("texto", ""), t, dur)
             if s:
                 texts.subtitle(img, s, panel.get("subtitulos_y"))
 
@@ -313,7 +358,7 @@ def render_episode(ep_path, out=None, fps=24, solo_panel=None, fotos=False):
             r = PanelRenderer(p, style, formato)
             t = durs[i] * 0.5
             img = r.frame(t, durs[i], 0)
-            overlay(img, p, max(t, 1.0), durs[i])
+            overlay(img, p, max(t, 1.0), durs[i], i)
             path = out_dir / f"{name}_panel{i + 1:02d}.png"
             Image.fromarray(img).save(path)
             print("Foto:", path)
@@ -323,7 +368,7 @@ def render_episode(ep_path, out=None, fps=24, solo_panel=None, fotos=False):
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
            "-s", f"{OW}x{OH}", "-r", str(fps), "-i", "-"]
     if voz is not None and solo_panel is None:
-        cmd += ["-i", str(voz), "-map", "0:v", "-map", "1:a", "-c:a", "aac", "-b:a", "192k", "-shortest"]
+        cmd += ["-i", str(voz), "-map", "0:v", "-map", "1:a", "-af", "apad", "-c:a", "aac", "-b:a", "192k", "-shortest"]
     cmd += ["-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-pix_fmt", "yuv420p",
             "-movflags", "+faststart", str(out)]
     ff = subprocess.Popen(cmd, stdin=subprocess.PIPE)
@@ -337,7 +382,7 @@ def render_episode(ep_path, out=None, fps=24, solo_panel=None, fotos=False):
         for k in range(n):
             t = k / fps
             img = r.frame(t, dur, fi)
-            overlay(img, p, t, dur)
+            overlay(img, p, t, dur, i)
             fade = min(1.0, t / FADE, (dur - t) / FADE)
             if fade < 1:
                 img = (img.astype(np.float32) * max(fade, 0)).astype(np.uint8)
