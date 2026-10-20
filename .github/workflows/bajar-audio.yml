@@ -37,7 +37,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-          git add -A audio pedidos
+          git add -A .
           git diff --cached --quiet && exit 0
           if ! git commit -q -m "Audio descargado de ElevenLabs" > git.log 2>&1; then
             echo "::error title=commit::$(tr '\n' ' ' < git.log)"; exit 1
