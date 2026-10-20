@@ -147,6 +147,16 @@ class Camcorder:
         return arr
 
 
+def digital_zoom(img, cx, cy, f):
+    """Zoom digital: recorta alrededor de (cx, cy) en pixeles de salida y amplía sin suavizar."""
+    h, w = img.shape[:2]
+    cw, ch = int(w / f), int(h / f)
+    x0 = int(min(max(cx - cw / 2, 0), w - cw))
+    y0 = int(min(max(cy - ch / 2, 0), h - ch))
+    crop = Image.fromarray(img[y0:y0 + ch, x0:x0 + cw])
+    return np.asarray(crop.resize((w, h), Image.NEAREST))
+
+
 def chunks(texto, max_words=6):
     """Parte la narración en pedazos cortos para subtítulos, cortando de preferencia en signos."""
     if not texto:
@@ -191,6 +201,7 @@ class PanelRenderer:
                 x, y = act["pos"]
                 em_tmp = np.zeros_like(em)
                 placed = sp.place(alb, a, x, y, act.get("escala", 1.0), act.get("espejo", False), em_tmp)
+                alb[placed] *= float(act.get("brillo", 1.0))      # <1 = personaje en sombra
                 em[placed] = 0
                 if act.get("contraluz", True):
                     rim_light(placed, em, sc.lights)
@@ -380,6 +391,11 @@ def render_episode(ep_path, out=None, fps=24, solo_panel=None, fotos=False):
 
     def overlay(img, panel, t, dur, idx=None):
         ef = panel.get("efectos", [])
+        if panel.get("zoom"):
+            z = panel["zoom"]
+            f0 = z.get("factor", 3)
+            f = f0 + (z.get("factor_final", f0) - f0) * ease(t / dur)       # acercamiento lento opcional
+            img[:] = digital_zoom(img, (z["centro"][0] - 6) * S, z["centro"][1] * S, f)
         if "grabacion" in ef or "pausa" in ef:
             img[:] = cam.draw(img, t, panel.get("grabacion_inicio", 0.0), "pausa" in ef)
         if panel.get("titulo"):

@@ -232,3 +232,41 @@ if __name__ == "__main__":
     for fn in (chico_camara, chico_escritorio, chico_tendido, chico_doble, doble_cuatro_patas, jaguar,
                jaguar_rostro, nahual_silueta, lancha, lancha_aerea, sombra_agua):
         fn()
+
+
+def jaguar_asomado():
+    """Jaguar asomándose detrás de un tronco con el rostro del chico, pálido, mirando fijo (para zoom)."""
+    rng = np.random.default_rng(21)
+    im, d = canvas(34, 34)
+    PIEL_P, PIEL_S = (178, 156, 134), (132, 112, 96)
+    d.polygon([(4, 9), (2, 4), (9, 6)], fill=JAG)                      # orejas echadas hacia atrás
+    d.polygon([(19, 6), (25, 3), (24, 9)], fill=JAG)
+    d.ellipse([1, 4, 28, 31], fill=JAG)
+    for _ in range(14):                                                 # manchas sólidas
+        x, y = rng.uniform(2, 26), rng.uniform(5, 28)
+        if 6 < x < 22 and y > 10:
+            continue
+        d.rectangle([x, y, x + 1, y + 1], fill=JAG_D)
+    d.ellipse([6, 10, 22, 31], fill=PIEL_P)                             # rostro humano
+    for y in range(10, 31):                                             # sombra del lado izq.
+        for x in range(6, 10):
+            if im.getpixel((x, y))[:3] == PIEL_P:
+                d.point((x, y), fill=PIEL_S)
+    d.polygon([(7, 13), (9, 11), (13, 10), (18, 10), (21, 12), (19, 13), (16, 12), (13, 14), (10, 12)], fill=PELO)   # fleco
+    for ex in (8, 15):                                                  # ojos muy abiertos, pupila diminuta
+        d.rectangle([ex, 16, ex + 3, 18], fill=(236, 232, 220))
+        d.point((ex + 1, 17), fill=(14, 10, 8))
+        d.line([(ex, 19), (ex + 3, 19)], fill=(98, 80, 68))
+    d.rectangle([12, 20, 13, 23], fill=PIEL_S)                          # nariz
+    d.ellipse([10, 25, 16, 28], fill=(30, 14, 14))                      # boca abierta, oscura
+    d.ellipse([10, 29, 17, 32], fill=JAG_L)
+    d.rectangle([22, 0, 33, 33], fill=(36, 30, 24))                     # tronco que lo tapa
+    for x in (24, 27, 30):
+        d.line([(x, 0), (x + 1, 33)], fill=(24, 20, 16))
+    brillos = [(9, 16), (11, 16), (9, 18), (11, 18), (16, 16), (18, 16), (16, 18), (18, 18)]
+    save("jaguar_asomado", im, (12, 33), brillos, "jaguar asomándose tras un tronco con el rostro del chico; usar con zoom",
+         color=[236, 232, 220])
+
+
+if __name__ == "__main__":
+    jaguar_asomado()

@@ -65,16 +65,19 @@ paneles:
       - ojos: {pos: [154, 238], color: [240, 200, 70], separacion: 2, tam: 1, aparece: 1.6}
     duracion: 3.5
 
-  - escena: negro
-    params: {luz: true}
+  - escena: bosque               # la grabación congelada, con zoom digital al jaguar
+    params: {hora: tarde, huellas: true, semilla: 2}
     efectos: [pausa]
     congelado: true
-    subtitulos_y: 0.86
     grabacion_inicio: 756
+    camara: {pan: 0}
+    zoom: {centro: [70, 224], factor: 2.5, factor_final: 4.5}
+    subtitulos_y: 0.86
     actores:
-      - sprite: nahual/jaguar_rostro
-        pos: [128, 300]
-        escala: 2.2
+      - sprite: nahual/jaguar_asomado
+        pos: [67, 240]
+        brillo: 0.5
+        contraluz: false
     texto: "No puede ser…"   # CHICO (susurrando)
     duracion: 3.0
 

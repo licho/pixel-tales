@@ -60,6 +60,7 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `murcielagos` | `cantidad`, `zona: [x0,y0,x1,y1]`, `tam`, `semilla` |
 | `escorpiones` | `cantidad`, `zona: [x0,y0,x1,y1]`, `tam`, `semilla` |
 | `ojos` | `pos`, `color` (default rojo), `separacion`, `tam`, `aparece` (segundo) — brillan en la oscuridad |
+| sprite en sombra | cualquier `sprite` con `brillo: 0.5` (más oscuro; sus ojos siguen brillando) y `contraluz: false` |
 | sprite animado | cualquier `sprite` con `aparece`, `desaparece` (seg), `movimiento: [dx, dy]` (px/seg) o `flota` (px) |
 
 ## Efectos (`efectos: [...]`)
@@ -71,6 +72,7 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `parpadeo` | El farol de la `calle` falla de vez en cuando |
 | `grabacion` | Interfaz de cámara de video: esquinas, REC parpadeando, contador (`grabacion_inicio` en seg) |
 | `pausa` | Igual pero en PAUSA; combínalo con `congelado: true` en el panel para detener la animación |
+| *(panel)* `zoom` | `zoom: {centro: [x, y], factor: 3, factor_final: 5}` zoom digital pixelado (con acercamiento lento opcional) |
 | *(automático)* | Fuego animado con humo; antorchas parpadean; contraluz en personajes cerca de fuego |
 
 ## Episodio
