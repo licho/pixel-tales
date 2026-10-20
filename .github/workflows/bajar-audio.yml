@@ -1,7 +1,8 @@
 name: Bajar audio de ElevenLabs
 
-# Cuando llega un archivo pedidos/<nombre>.url con el enlace temporal del audio,
-# GitHub lo descarga en audio/<nombre>.mp3 y borra el pedido.
+# Cuando llega un archivo pedidos/<nombre>.url con un enlace temporal, GitHub lo descarga
+# en audio/<nombre> (si <nombre> no trae extensión se guarda como .mp3) y borra el pedido.
+# Ejemplos: pedidos/ep01.url -> audio/ep01.mp3 ; pedidos/ep01.palabras.json.url -> audio/ep01.palabras.json
 on:
   push:
     paths:
@@ -10,29 +11,40 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   bajar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
 
-      - name: Descargar audios pedidos
+      - name: Descargar pedidos
         run: |
           shopt -s nullglob
           mkdir -p audio
           for f in pedidos/*.url; do
             nombre=$(basename "$f" .url)
-            echo "Descargando $nombre"
-            curl -sSfL --retry 3 -o "audio/$nombre.mp3" "$(tr -d '[:space:]' < "$f")"
+            destino="audio/$nombre"
+            [[ "$nombre" == *.* ]] || destino="$destino.mp3"
+            echo "Descargando $destino"
+            curl -sSfL --retry 3 -o "$destino" "$(tr -d '[:space:]' < "$f")"
             git rm -q "$f"
           done
 
       - name: Guardar en el repositorio
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
           git add -A audio pedidos
           git diff --cached --quiet && exit 0
-          git commit -m "Audio descargado de ElevenLabs"
-          git push
+          git commit -q -m "Audio descargado de ElevenLabs"
+          if ! git push origin "HEAD:${GITHUB_REF_NAME}" > push.log 2>&1; then
+            cat push.log
+            gh issue create --title "Falló guardar audio (run ${GITHUB_RUN_ID})" --body "$(cat push.log)" || true
+            exit 1
+          fi
