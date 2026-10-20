@@ -1,0 +1,56 @@
+nombre: survival
+descripcion: Survival horror postapocalíptico. Teal oscuro, carbón, ámbar de fuego y amarillo de traje.
+tramado: 13            # intensidad del tramado (más alto = más "puntitos")
+ambiente: [0.40, 0.55, 0.58]   # luz ambiental (multiplica el color base): noche teal
+primer_plano: 0.6      # qué tan oscuro queda el primer plano
+lluvia: [110, 136, 128]
+salpicadura: [146, 166, 156]
+humo: [70, 84, 84]
+paleta:
+  # teal / carbón
+  - [8, 12, 13]
+  - [14, 20, 22]
+  - [17, 25, 28]
+  - [20, 29, 32]
+  - [24, 35, 38]
+  - [28, 40, 43]
+  - [33, 47, 50]
+  - [38, 54, 56]
+  - [44, 62, 64]
+  - [50, 70, 71]
+  - [57, 79, 79]
+  - [64, 88, 87]
+  - [74, 99, 96]
+  - [84, 110, 106]
+  - [96, 122, 116]
+  - [110, 136, 128]
+  - [146, 166, 156]
+  - [188, 200, 188]
+  # verdes sucios
+  - [24, 34, 30]
+  - [36, 52, 44]
+  - [58, 72, 60]
+  - [84, 96, 76]
+  - [112, 120, 92]
+  # ámbar / fuego
+  - [40, 24, 16]
+  - [74, 40, 20]
+  - [118, 62, 24]
+  - [170, 92, 32]
+  - [222, 140, 48]
+  - [246, 190, 96]
+  - [255, 232, 170]
+  # traje amarillo
+  - [70, 58, 24]
+  - [112, 94, 36]
+  - [154, 132, 52]
+  - [196, 172, 80]
+  - [228, 210, 130]
+  # óxido / sangre
+  - [60, 26, 24]
+  - [102, 40, 34]
+  - [150, 56, 44]
+  # grises
+  - [92, 98, 104]
+  - [132, 138, 140]
+  - [170, 172, 168]

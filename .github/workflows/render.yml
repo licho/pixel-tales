@@ -1,0 +1,57 @@
+name: Render episodio
+
+on:
+  push:
+    paths:
+      - "series/**/*.yaml"
+  workflow_dispatch:
+    inputs:
+      episodio:
+        description: "Ruta del episodio (ej. series/survival/ep01.yaml)"
+        required: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -r requirements.txt
+
+      - name: Elegir episodios
+        id: eps
+        run: |
+          if [ -n "${{ github.event.inputs.episodio }}" ]; then
+            echo "lista=${{ github.event.inputs.episodio }}" >> "$GITHUB_OUTPUT"
+          else
+            if git rev-parse -q --verify HEAD~1 >/dev/null; then
+              lista=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD -- 'series/**/*.yaml' | tr '\n' ' ')
+            else
+              lista=$(git ls-files 'series/**/*.yaml' | tr '\n' ' ')
+            fi
+            echo "lista=$lista" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Renderizar
+        run: |
+          for ep in ${{ steps.eps.outputs.lista }}; do
+            echo "== $ep"
+            python render.py "$ep"
+          done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: videos
+          path: output/*.mp4
+          if-no-files-found: warn

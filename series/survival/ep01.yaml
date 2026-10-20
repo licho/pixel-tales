@@ -1,0 +1,34 @@
+# Episodio de prueba. Sin voz todavía: cada panel usa su 'duracion'.
+# Cuando tengas el audio, pon `voz: ep01.mp3` (en esta carpeta) y quita las duraciones:
+# el motor reparte el audio entre paneles según el largo de cada 'texto'.
+titulo: "Día 3"
+estilo: survival
+# voz: ep01.mp3
+
+paneles:
+  - escena: calle
+    efectos: [lluvia, parpadeo]
+    camara: {pan: 18}
+    actores:
+      - sprite: survival/sobreviviente_traje
+        pos: [96, 208]
+      - zombi: {pos: [212, 142], altura: 12}
+      - zombi: {pos: [226, 141], altura: 11}
+      - zombi: {pos: [246, 150], altura: 18}
+      - zombi: {pos: [272, 162], altura: 26, avanza: [-0.8, 1.4]}
+      - zombi: {pos: [318, 168], altura: 30}
+    texto: "Día tres. La ciudad dejó de hacer ruido, pero no dejó de moverse."
+    duracion: 7
+
+  - escena: calle
+    params: {farol: false, carro: false, semilla: 5}
+    efectos: [lluvia, relampago]
+    camara: {pan: 10}
+    actores:
+      - sprite: survival/sobreviviente_traje
+        pos: [110, 210]
+      - zombi: {pos: [236, 146], altura: 16}
+      - zombi: {pos: [262, 156], altura: 22}
+      - zombi: {pos: [292, 166], altura: 28}
+    texto: "Sin la luz del farol, solo quedaba el fuego. Y el fuego también los atrae."
+    duracion: 7
