@@ -11,6 +11,7 @@ Formatos de marca: `cuadrado` (perfil 1080), `portada_fb` (1640x624), `banner_yt
 | `survival` | Noche postapocalíptica: teal oscuro, carbón, ámbar de fuego, amarillo de traje |
 | `xibalba` | Inframundo maya: obsidiana, rojo sangre, hueso, ocre, jade apagado, antorcha |
 | `pixeltales` | Marca del canal: mezcla de survival y xibalba (portadas, piezas de marca) |
+| `nahual` | Terror mexicano nocturno: azul noche, bosque, niebla, sepia de fotos, lámpara ámbar, ojos dorados |
 
 ## Escenas / fondos (`scenes/`)
 Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = horizontal.
@@ -23,6 +24,11 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `salon_tronos` | H, V | Templo: plataforma con 2 tronos, mascarón, tzompantli, braseros | `tronos`, `tzompantli`, `braseros`, `semilla` | tronos (0.40 W, 0.535 H) y (0.60 W, 0.535 H); piso x 0.15-0.85 W, y 0.74-0.95 H |
 | `casa_interior` | H, V | Casa maya de noche: palma, bajareque, puerta con luna, hamaca, fogón | `fogon`, `puerta_luna`, `hamaca`, `rincon_oscuro`, `semilla` | rincón oscuro (0.74 W, 0.79 H); piso x 0.10-0.80 W, y 0.80-0.97 H |
 | `panorama` | todos | Marca: ciudad en ruinas, pirámide bajo luna roja, bosque, fogata | `horizonte` (0-1), `escala` (px), `luna_roja`, `fogata` | ver `tools/portada.py` |
+| `negro` | todos | Pantalla negra para inicios/cortes/finales | `niebla`, `luz` (luz neutra para actores) | cualquier punto; ideal con `ojos` |
+| `foto_mesa` | H, V | Foto antigua sepia sobre mesa o lancha, bajo lámpara | `contenido` (hombre_jaguar/abuelo/bebe/reverso), `texto` (reverso, líneas con \|), `superficie` (mesa/lancha), `giro` | centro foto (0.5 W, 0.46 H); ojos del 'bebe' en (0.62 W, 0.38 H) |
+| `archivo` | H, V | Cuarto de investigación: corcho con fotos e hilos rojos, escritorio, lámpara | `ventana`, `jaguar` | silla (0.52 W, 0.93 H) |
+| `bosque` | todos | Bosque con sendero de lodo y niebla | `hora` (tarde/noche), `niebla`, `huellas`, `orilla` (agua abajo), `semilla` | sendero cerca (0.5 W, 0.95 H); entre árboles x 0.25-0.75 W, y 0.62-0.66 H; lancha (0.45 W, 0.97 H) con orilla |
+| `lago` | todos | Lago con montañas, bosque y niebla | `vista` (orilla/aerea), `hora` (anochecer/noche), `isla`, `niebla` | orilla: lancha (0.45 W, 0.93 H); aérea: lancha escala ~0.6 en x 0.4-0.6 W |
 | `juego_pelota` | H, V | Cancha de pelota de noche, aros, templos, luna | `aros`, `antorchas`, `luna`, `semilla` | dos personajes (0.40 W, 0.97 H) y (0.60 W, 0.97 H) |
 
 ## Sprites (`sprites/`)
@@ -35,6 +41,17 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `xibalba/senor_b` | Señor de pie, capa verde oscuro, brazos con garras | 80 px |
 | `xibalba/gemelo` | Jugador de pelota de espaldas (usar `espejo` para el hermano) | 90 px |
 | `xibalba/sombra` | Figura agazapada con cuchillo de obsidiana; ojos y filo brillan | 42 px |
+| `nahual/chico_camara` | Joven investigador grabando con cámara, mira a la derecha | 66 px |
+| `nahual/chico_escritorio` | El chico de espaldas, sentado | 50 px |
+| `nahual/chico_tendido` | El chico acostado, inconsciente (ancho 60) | 16 px |
+| `nahual/chico_doble` | El doble: idéntico, de frente, inmóvil, sonríe, ojos dorados | 66 px |
+| `nahual/doble_cuatro_patas` | El doble a cuatro patas, avanza a la derecha | 32 px |
+| `nahual/jaguar` | Jaguar de perfil, mira a la izquierda; ojo brilla | 40 px |
+| `nahual/jaguar_rostro` | Close-up: cabeza de jaguar con rostro humano | 84 px |
+| `nahual/nahual_silueta` | Silueta humana con cabeza de jaguar, ojos dorados | 78 px |
+| `nahual/lancha` | Lancha de madera de lado (ancla = línea del agua) | 26 px |
+| `nahual/lancha_aerea` | Lancha vista desde arriba con el chico tendido | 70 px |
+| `nahual/sombra_agua` | Sombra de jaguar bajo el agua (vista desde arriba) | 90 px |
 
 ## Actores animados
 | Tipo | Opciones |
@@ -43,6 +60,7 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `murcielagos` | `cantidad`, `zona: [x0,y0,x1,y1]`, `tam`, `semilla` |
 | `escorpiones` | `cantidad`, `zona: [x0,y0,x1,y1]`, `tam`, `semilla` |
 | `ojos` | `pos`, `color` (default rojo), `separacion`, `tam`, `aparece` (segundo) — brillan en la oscuridad |
+| sprite animado | cualquier `sprite` con `aparece`, `desaparece` (seg), `movimiento: [dx, dy]` (px/seg) o `flota` (px) |
 
 ## Efectos (`efectos: [...]`)
 | Nombre | Qué hace |
@@ -51,6 +69,8 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `ceniza` | Ceniza y brasas flotando |
 | `relampago` | Destello del cielo a mitad del panel |
 | `parpadeo` | El farol de la `calle` falla de vez en cuando |
+| `grabacion` | Interfaz de cámara de video: esquinas, REC parpadeando, contador (`grabacion_inicio` en seg) |
+| `pausa` | Igual pero en PAUSA; combínalo con `congelado: true` en el panel para detener la animación |
 | *(automático)* | Fuego animado con humo; antorchas parpadean; contraluz en personajes cerca de fuego |
 
 ## Episodio

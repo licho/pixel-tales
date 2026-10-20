@@ -176,3 +176,37 @@ def draw_eyes(rgb, alpha, cfg, t, i=0):
                     edge = abs(dx) == tam
                     rgb[py, px] = dim if edge else c
                     alpha[py, px] = True
+
+
+# ------------------------------------------------------ sprites animados ---
+class MovingSprite:
+    """Sprite que aparece en un momento y/o se desplaza: {sprite, pos, escala, espejo, aparece, movimiento: [dx, dy]}.
+    `flota: px` lo hace subir y bajar suave (lanchas, respiración)."""
+
+    def __init__(self, path, cfg):
+        im = Image.open(path).convert("RGBA")
+        meta = Path(path).with_suffix(".json")
+        info = json.loads(meta.read_text()) if meta.exists() else {}
+        ax, ay = info.get("ancla", (im.width // 2, im.height - 1))
+        if cfg.get("espejo"):
+            im = im.transpose(Image.FLIP_LEFT_RIGHT)
+            ax = im.width - 1 - ax
+        e = cfg.get("escala", 1.0)
+        if e != 1.0:
+            im = im.resize((max(1, round(im.width * e)), max(1, round(im.height * e))), Image.NEAREST)
+            ax, ay = ax * e, ay * e
+        self.im, self.ax, self.ay, self.cfg = im, ax, ay, cfg
+        a = np.asarray(im)[..., 3] > 127
+        self.mask = Image.fromarray((a * 255).astype(np.uint8))
+
+    def __call__(self, img, alpha, cfg, t, i=0):
+        c = self.cfg
+        if t < c.get("aparece", 0) or t > c.get("desaparece", 1e9):
+            return
+        x, y = c["pos"]
+        dx, dy = c.get("movimiento", (0, 0))
+        tt = t - c.get("aparece", 0)
+        x, y = x + dx * tt, y + dy * tt + c.get("flota", 0) * math.sin(t * 1.6 + i)
+        px, py = int(round(x - self.ax)), int(round(y - self.ay))
+        img.paste(self.im.convert("RGB"), (px, py), self.mask)
+        alpha.paste(255, (px, py, px + self.im.width, py + self.im.height), self.mask)

@@ -1,0 +1,62 @@
+nombre: nahual
+descripcion: Terror mexicano nocturno. Azul noche, verde de bosque, niebla, sepia de fotos viejas, ámbar de lámpara y ojos dorados de jaguar.
+tramado: 12
+ambiente: [0.30, 0.37, 0.50]      # noche azulada
+primer_plano: 0.5
+ceniza: [120, 128, 132]           # aquí la "ceniza" se ve como polvo/polillas
+brasa: [232, 156, 64]
+humo: [70, 78, 86]
+texto: [230, 226, 214]
+acento: [232, 176, 64]            # título dorado (ojos de jaguar)
+fuente_texto: PixelifySans-Bold.woff
+fuente_titulo: Silkscreen-Bold.woff
+paleta:
+  # noche
+  - [5, 7, 12]
+  - [10, 14, 22]
+  - [16, 22, 32]
+  - [24, 32, 44]
+  - [34, 44, 58]
+  - [48, 60, 76]
+  - [66, 80, 96]
+  - [90, 104, 118]
+  - [122, 134, 144]
+  - [164, 172, 176]
+  - [206, 210, 206]
+  # bosque
+  - [10, 18, 14]
+  - [16, 28, 20]
+  - [24, 40, 28]
+  - [36, 56, 38]
+  - [52, 76, 50]
+  - [74, 98, 64]
+  # tierra / lodo / madera
+  - [30, 22, 16]
+  - [48, 34, 22]
+  - [70, 50, 30]
+  - [98, 70, 42]
+  - [128, 94, 58]
+  # sepia (fotos viejas)
+  - [44, 32, 22]
+  - [80, 60, 40]
+  - [118, 92, 62]
+  - [158, 128, 90]
+  - [198, 170, 126]
+  - [228, 208, 168]
+  # piel
+  - [110, 74, 52]
+  - [150, 104, 74]
+  - [196, 150, 112]
+  # lámpara / ámbar
+  - [120, 60, 20]
+  - [184, 100, 34]
+  - [232, 156, 64]
+  - [252, 214, 140]
+  - [255, 240, 200]
+  # jaguar / ojos
+  - [150, 96, 34]
+  - [196, 136, 52]
+  - [240, 200, 70]
+  # rojo (REC) y blancos
+  - [200, 40, 30]
+  - [236, 232, 220]

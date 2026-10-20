@@ -9,7 +9,7 @@ import numpy as np
 import yaml
 from PIL import Image, ImageDraw, ImageFont
 
-from .actors import Sprite, draw_bats, draw_eyes, draw_scorpions, draw_zombie, rim_light
+from .actors import MovingSprite, Sprite, draw_bats, draw_eyes, draw_scorpions, draw_zombie, rim_light
 from .core import FORMATOS, S, Palette, ease, flicker
 from .effects import Ash, Rain, Smoke, draw_flames
 
@@ -113,6 +113,40 @@ class TextLayer:
         self._paste(frame, spr, self.W / 2 + shake, self.tit_y - shake)
 
 
+class Camcorder:
+    """Interfaz de cámara de video encima del cuadro: esquinas, REC, contador; o PAUSA congelada."""
+
+    def __init__(self, out_w, out_h):
+        self.W, self.H = out_w, out_h
+        self.f = ImageFont.truetype(str(ROOT / "fonts" / "Silkscreen-Bold.woff"), int(out_w * 0.045))
+
+    def draw(self, frame, t, inicio=0.0, pausa=False):
+        im = Image.fromarray(frame)
+        d = ImageDraw.Draw(im)
+        d.fontmode = "1"
+        W, H = self.W, self.H
+        m, L, w = int(W * 0.06), int(W * 0.09), max(4, W // 180)
+        white = (236, 232, 220)
+        for cx, cy, sx, sy in ((m, m, 1, 1), (W - m, m, -1, 1), (m, H - m, 1, -1), (W - m, H - m, -1, -1)):
+            d.line([(cx, cy), (cx + sx * L, cy)], fill=white, width=w)
+            d.line([(cx, cy), (cx, cy + sy * L)], fill=white, width=w)
+        tc = inicio + (0 if pausa else t)
+        code = f"{int(tc // 3600):02d}:{int(tc // 60) % 60:02d}:{int(tc) % 60:02d}"
+        d.text((W - m - L * 0.2, m + L * 0.6), code, font=self.f, fill=white, anchor="rm", stroke_width=3, stroke_fill=(0, 0, 0))
+        if pausa:
+            d.text((m + L * 0.2, m + L * 0.6), "|| PAUSA", font=self.f, fill=white, anchor="lm", stroke_width=3, stroke_fill=(0, 0, 0))
+        elif (t % 1.0) < 0.6:
+            r = int(W * 0.018)
+            d.ellipse([m + L * 0.25, m + L * 0.6 - r, m + L * 0.25 + 2 * r, m + L * 0.6 + r], fill=(200, 40, 30))
+            d.text((m + L * 0.25 + 2.6 * r, m + L * 0.6), "REC", font=self.f, fill=white, anchor="lm", stroke_width=3, stroke_fill=(0, 0, 0))
+        arr = np.asarray(im).copy()
+        rng = np.random.default_rng(int(t * 24) if not pausa else int(t * 6))
+        for _ in range(3 if not pausa else 6):          # líneas de interferencia
+            y = int(rng.integers(0, H - 6))
+            arr[y:y + int(rng.integers(2, 6))] = np.clip(arr[y:y + 6][:1].astype(np.int16) + 40, 0, 255).astype(np.uint8)
+        return arr
+
+
 def chunks(texto, max_words=6):
     """Parte la narración en pedazos cortos para subtítulos, cortando de preferencia en signos."""
     if not texto:
@@ -150,7 +184,9 @@ class PanelRenderer:
         alb, a, em = sc.mid_alb.copy(), sc.mid_a.copy(), sc.mid_em.copy()
         self.dyn, self.eyes = [], []
         for act in panel.get("actores", []) or []:
-            if "sprite" in act:
+            if "sprite" in act and ("movimiento" in act or "aparece" in act or "flota" in act or "desaparece" in act):
+                self.dyn.append((MovingSprite(ROOT / "sprites" / f"{act['sprite']}.png", act), None))
+            elif "sprite" in act:
                 sp = Sprite(ROOT / "sprites" / f"{act['sprite']}.png")
                 x, y = act["pos"]
                 em_tmp = np.zeros_like(em)
@@ -340,7 +376,12 @@ def render_episode(ep_path, out=None, fps=24, solo_panel=None, fotos=False):
     out_dir.mkdir(exist_ok=True)
     name = f"{ep_path.parent.name}_{ep_path.stem}"
 
+    cam = Camcorder(OW, OH)
+
     def overlay(img, panel, t, dur, idx=None):
+        ef = panel.get("efectos", [])
+        if "grabacion" in ef or "pausa" in ef:
+            img[:] = cam.draw(img, t, panel.get("grabacion_inicio", 0.0), "pausa" in ef)
         if panel.get("titulo"):
             texts.title(img, panel["titulo"], t)
         if subs:
@@ -381,7 +422,7 @@ def render_episode(ep_path, out=None, fps=24, solo_panel=None, fotos=False):
         print(f"Panel {i + 1}/{len(ep['paneles'])}: {p['escena']} ({dur:.1f}s)")
         for k in range(n):
             t = k / fps
-            img = r.frame(t, dur, fi)
+            img = r.frame(0.4 if p.get("congelado") else t, dur, fi if not p.get("congelado") else 0)
             overlay(img, p, t, dur, i)
             fade = min(1.0, t / FADE, (dur - t) / FADE)
             if fade < 1:

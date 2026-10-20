@@ -1,0 +1,31 @@
+{
+  "ancla": [
+    14,
+    65
+  ],
+  "brillos": [
+    {
+      "pos": [
+        11,
+        7
+      ],
+      "color": [
+        240,
+        200,
+        70
+      ]
+    },
+    {
+      "pos": [
+        16,
+        7
+      ],
+      "color": [
+        240,
+        200,
+        70
+      ]
+    }
+  ],
+  "notas": "el doble: idéntico al chico, de frente, inmóvil, sonríe"
+}

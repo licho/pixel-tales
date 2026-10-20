@@ -1,0 +1,31 @@
+{
+  "ancla": [
+    20,
+    77
+  ],
+  "brillos": [
+    {
+      "pos": [
+        17,
+        10
+      ],
+      "color": [
+        240,
+        200,
+        70
+      ]
+    },
+    {
+      "pos": [
+        23,
+        10
+      ],
+      "color": [
+        240,
+        200,
+        70
+      ]
+    }
+  ],
+  "notas": "silueta humana con cabeza de jaguar"
+}
