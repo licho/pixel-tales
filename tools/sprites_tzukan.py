@@ -6,7 +6,7 @@
   vuelo_sola      igual, sin Chaac
   chaac_espalda   Chaac caminando, visto de espaldas (hacha en la mano)
   chaac_sentado   Chaac sentado de perfil, mira a la derecha
-  caballo_alado   El caballo alado de Chaac, de perfil mirando a la derecha
+  pavo_monte      Pavo de monte (ocelado), la montura de Chaac, de perfil mirando a la derecha
 
   python tools/sprites_tzukan.py
 """
@@ -379,41 +379,50 @@ def chaac_sentado():
     lz.guarda("chaac_sentado", (hx, hy + 3), notas="Chaac sentado de perfil mirando a la derecha. Ancla = asiento (pon y sobre el tronco).")
 
 
-def caballo_alado():
-    lz = Lienzo(76, 70)
-    C, C_D = (214, 210, 198), (160, 156, 146)
-    by = 69
-    for x, c in ((18, C_D), (46, C_D)):
-        m = lz.mascara(lambda d: d.polygon([(x, 44), (x + 5, 44), (x + 4, by), (x, by)], fill=255))
-        lz.pinta(m, c, r=1, relieve=2)
-    # ala de atrás
-    ala_m = lz.mascara(lambda d: d.polygon([(30, 36), (14, 6), (22, 4), (34, 14), (40, 32)], fill=255))
-    lz.pinta(ala_m, (150, 180, 200), r=2, relieve=2)
-    torso = lz.mascara(lambda d: d.ellipse([12, 30, 60, 52], fill=255))
-    lz.pinta(torso, C, r=4, relieve=6)
-    for x in (22, 52):
-        m = lz.mascara(lambda d: d.polygon([(x, 44), (x + 5, 44), (x + 4, by), (x, by)], fill=255))
-        lz.pinta(m, C, r=1, relieve=2)
-        h = lz.mascara(lambda d: d.rectangle([x, by - 2, x + 5, by], fill=255))
-        lz.plano(h, (60, 54, 46))
-    cuello = lz.mascara(lambda d: d.polygon([(48, 38), (58, 16), (66, 18), (60, 42)], fill=255))
-    lz.pinta(cuello, C, r=2, relieve=4)
-    cab = lz.mascara(lambda d: d.polygon([(58, 14), (66, 10), (75, 22), (72, 26), (62, 22)], fill=255))
-    lz.pinta(cab, C, r=1.5, relieve=3)
-    crin = lz.mascara(lambda d: d.line([(58, 12), (54, 22), (50, 34)], fill=255, width=3))
-    lz.pinta(crin, (60, 120, 150), r=1, relieve=2)
-    ojo = lz.mascara(lambda d: d.point((66, 15), fill=255))
-    lz.plano(ojo, (16, 12, 10))
-    cola = lz.mascara(lambda d: d.line([(13, 36), (6, 44), (5, 56)], fill=255, width=3))
-    lz.pinta(cola, (60, 120, 150), r=1, relieve=2)
-    # ala de adelante, levantada
-    ala_f = lz.mascara(lambda d: d.polygon([(32, 38), (22, 2), (32, 0), (44, 10), (46, 34)], fill=255))
-    lz.pinta(ala_f, (196, 214, 226), r=2, relieve=3)
+def pavo_monte():
+    """Pavo de monte (pavo ocelado de Yucatán, animal asociado a Chaac), grande, como montura."""
+    lz = Lienzo(80, 72)
+    BR, BR_D, VERDE = (120, 96, 54), (70, 56, 34), (44, 110, 84)
+    by = 71
+    for x in (34, 44):                                            # patas rosadas
+        m = lz.mascara(lambda d: (d.line([(x, 52), (x + 1, by - 1)], fill=255, width=3),
+                                  d.line([(x - 3, by), (x + 5, by)], fill=255, width=2)))
+        lz.pinta(m, (196, 110, 110), r=1, relieve=1.5)
+    # cola en abanico con ocelos azul-bronce
+    cola = lz.mascara(lambda d: d.pieslice([2, 14, 42, 62], 150, 260, fill=255))
+    lz.pinta(cola, BR_D, r=2, relieve=3)
+    for k in range(7):
+        a = math.radians(158 + k * 14)
+        for rr in (13, 19):
+            ox, oy = 22 + math.cos(a) * rr, 38 + math.sin(a) * rr
+            o = lz.mascara(lambda d: d.ellipse([ox - 1.8, oy - 1.8, ox + 1.8, oy + 1.8], fill=255))
+            lz.plano(o & cola, (70, 120, 170))
+            c = lz.mascara(lambda d: d.point((ox, oy), fill=255))
+            lz.plano(c & cola, (236, 200, 70))
+    cuerpo_m = lz.mascara(lambda d: d.ellipse([18, 26, 60, 56], fill=255))
+    lz.pinta(cuerpo_m, VERDE, r=4, relieve=6, spec=0.8, dureza=10)
+    rng = np.random.default_rng(9)
+    for _ in range(40):                                            # plumas iridiscentes con borde bronce
+        x, y = rng.uniform(22, 56), rng.uniform(30, 52)
+        m = lz.mascara(lambda d: d.arc([x - 2, y - 1.5, x + 2, y + 1.5], 0, 180, fill=255))
+        lz.rgb[m & cuerpo_m] = lz.rgb[m & cuerpo_m] * 0.5 + np.array(BR, np.float32) * 0.6
+    ala_m = lz.mascara(lambda d: d.ellipse([26, 32, 52, 48], fill=255))
+    lz.pinta(ala_m, (150, 120, 70), r=2, relieve=3, oclusion=False)
     for k in range(4):
-        pl = lz.mascara(lambda d: d.line([(36 + k * 2, 34), (26 + k * 4, 4)], fill=255))
-        lz.rgb[pl & ala_f] *= 0.8
-    lz.guarda("caballo_alado", (38, by), notas="Caballo alado de Chaac, de perfil mirando a la derecha.")
-
+        m = lz.mascara(lambda d: d.line([(30 + k * 5, 36), (34 + k * 5, 47)], fill=255))
+        lz.rgb[m & ala_m] *= 0.6
+    cuello = lz.mascara(lambda d: d.polygon([(50, 32), (58, 12), (64, 14), (60, 36)], fill=255))
+    lz.pinta(cuello, (70, 120, 170), r=1.5, relieve=3)
+    cab = lz.mascara(lambda d: d.ellipse([56, 6, 68, 18], fill=255))
+    lz.pinta(cab, (70, 120, 170), r=1.5, relieve=3)
+    for wx, wy in ((58, 8), (61, 6), (64, 8), (57, 16)):          # verrugas naranjas
+        w = lz.mascara(lambda d: d.ellipse([wx - 1.2, wy - 1.2, wx + 1.2, wy + 1.2], fill=255))
+        lz.plano(w, (230, 140, 50))
+    pico = lz.mascara(lambda d: d.polygon([(67, 11), (74, 13), (67, 15)], fill=255))
+    lz.pinta(pico, (200, 180, 140), r=1, relieve=1.5, oclusion=False)
+    ojo = lz.mascara(lambda d: d.point((64, 11), fill=255))
+    lz.plano(ojo, (16, 12, 10))
+    lz.guarda("pavo_monte", (40, by), notas="Pavo de monte (ocelado) grande, montura de Chaac. Mira a la derecha.")
 
 if __name__ == "__main__":
     tronco()
@@ -422,4 +431,4 @@ if __name__ == "__main__":
     vuelo(chaac=False)
     chaac_espalda()
     chaac_sentado()
-    caballo_alado()
+    pavo_monte()

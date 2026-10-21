@@ -69,7 +69,7 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `tzukan/vuelo_sola` | Igual, sin Chaac | 110 px |
 | `tzukan/chaac_espalda` | Chaac (dios de la lluvia, azul, tocado de plumas, hacha) caminando de espaldas | 80 px |
 | `tzukan/chaac_sentado` | Chaac sentado de perfil, mira a la derecha; ancla = asiento | 66 px |
-| `tzukan/caballo_alado` | Caballo alado blanco, de perfil mirando a la derecha | 70 px |
+| `tzukan/pavo_monte` | Pavo de monte (ocelado de Yucatán) grande, montura de Chaac; mira a la derecha | 72 px |
 | `oceano/pesquero` | Barco pesquero, proa a la derecha, farol encendido; ancla = línea del agua | 50 px |
 
 ## Actores animados

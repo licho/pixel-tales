@@ -49,9 +49,9 @@ paneles:
     params: {hora: tarde, niebla: true, semilla: 3}
     camara: {pan: 5}
     actores:
-      - sprite: tzukan/caballo_alado
-        pos: [36, 334]
-        escala: 0.8
+      - sprite: tzukan/pavo_monte
+        pos: [54, 336]
+        escala: 1.0
       - sprite: tzukan/tronco
         pos: [120, 372]
         escala: 1.3
@@ -68,14 +68,15 @@ paneles:
     relampago_t: [2.6]
     camara: {pan: 4}
     actores:
-      - sprite: tzukan/caballo_alado
+      - sprite: tzukan/pavo_monte
         pos: [64, 380]
+        escala: 1.3
         desaparece: 2.65
       - sprite: tzukan/alzada
         pos: [160, 384]
         escala: 1.1
         movimiento: [-6, 1]
-    texto: "Era Tzukán. Y de un solo bocado, se tragó al caballo del dios."
+    texto: "Era Tzukán. Y de un solo bocado, se tragó la montura del dios."
 
   # 6. Hacia el mar
   - escena: mar_tormenta
