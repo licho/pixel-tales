@@ -282,6 +282,8 @@ class PanelRenderer:
         e = ease(t / dur)
         lt = (t - dur * 0.55) % 7.3
         flash = self.relampago and (0 < lt < 0.1 or 0.2 < lt < 0.26)
+        if self.relampago and self.panel.get("relampago_t") is not None:     # rayos en segundos exactos
+            flash = any(0 < t - x < 0.1 or 0.2 < t - x < 0.26 for x in self.panel["relampago_t"])
         W = self.VW * S
 
         def ox(f):

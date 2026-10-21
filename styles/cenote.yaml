@@ -1,0 +1,72 @@
+nombre: cenote
+descripcion: Leyendas del agua en Yucatán. Turquesa y jade de cenote, piedra caliza, selva, azul maya de Chaac, sol de sequía y tormenta violeta.
+tramado: 12
+ambiente: [0.52, 0.58, 0.58]      # luz verdosa de cueva/selva
+primer_plano: 0.5
+lluvia: [128, 146, 156]
+salpicadura: [196, 214, 216]
+ceniza: [150, 190, 176]           # partículas flotando en el agua / polvo
+brasa: [240, 210, 110]
+humo: [80, 96, 96]
+texto: [232, 236, 220]
+acento: [96, 214, 196]            # título turquesa
+fuente_texto: PixelifySans-Bold.woff
+fuente_titulo: Silkscreen-Bold.woff
+paleta:
+  # sombras de cueva
+  - [4, 6, 8]
+  - [8, 12, 14]
+  - [12, 18, 20]
+  - [18, 26, 28]
+  - [26, 36, 38]
+  - [36, 48, 48]
+  # agua de cenote
+  - [8, 34, 44]
+  - [12, 52, 64]
+  - [18, 76, 88]
+  - [28, 104, 112]
+  - [44, 136, 136]
+  - [72, 170, 160]
+  - [120, 206, 190]
+  - [186, 236, 220]
+  # caliza
+  - [58, 52, 44]
+  - [86, 78, 64]
+  - [118, 108, 88]
+  - [152, 142, 116]
+  - [190, 180, 150]
+  - [226, 218, 190]
+  # selva / raíces
+  - [20, 30, 18]
+  - [30, 46, 24]
+  - [44, 66, 32]
+  - [66, 92, 42]
+  - [98, 124, 56]
+  - [52, 36, 24]
+  - [80, 56, 34]
+  # serpiente (corteza y escamas)
+  - [40, 34, 26]
+  - [64, 56, 40]
+  - [92, 84, 58]
+  # azul maya (Chaac)
+  - [20, 46, 74]
+  - [34, 76, 112]
+  - [58, 118, 156]
+  - [106, 168, 196]
+  # sequía / atardecer
+  - [110, 50, 30]
+  - [164, 82, 40]
+  - [212, 128, 60]
+  - [244, 180, 96]
+  - [255, 226, 160]
+  # tormenta violeta
+  - [30, 26, 44]
+  - [48, 44, 70]
+  - [76, 72, 104]
+  - [120, 116, 150]
+  - [200, 196, 232]
+  # ojos / oro / jade
+  - [236, 200, 70]
+  - [255, 240, 150]
+  - [60, 150, 90]
+  - [176, 40, 32]

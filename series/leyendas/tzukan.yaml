@@ -1,0 +1,115 @@
+# TZUKÁN, LA SERPIENTE DE LOS CENOTES — reel vertical (~60 s). Sin voz todavía.
+# Coordenadas en pixeles de arte: vertical = 256 x 384 (la vista es 216 x 384).
+titulo: "Tzukán, la serpiente de los cenotes"
+estilo: cenote
+formato: vertical
+subtitulos: true
+
+paneles:
+  # 1. El gancho: un tronco en el fondo del cenote
+  - escena: cenote
+    params: {turbidez: 0.5}
+    efectos: [ceniza]
+    titulo: "TZUKÁN"
+    camara: {pan: 4}
+    actores:
+      - sprite: tzukan/tronco
+        pos: [128, 332]
+        contraluz: false
+    texto: "Si algún día nadas en un cenote y ves un tronco en el fondo… no lo toques."
+
+  # 2. Los ojos se abren
+  - escena: cenote
+    params: {turbidez: 0.5}
+    efectos: [ceniza]
+    camara: {pan: 0}
+    zoom: {centro: [186, 300], factor: 1.0, factor_final: 2.2}
+    actores:
+      - sprite: tzukan/tronco
+        pos: [128, 332]
+        contraluz: false
+      - ojos: {pos: [200, 315], color: [255, 214, 70], separacion: 0, tam: 1, aparece: 1.5}
+    texto: "Podría ser Tzukán, la serpiente gigante que, según los mayas, cuida el agua de Yucatán."
+
+  # 3. La sequía
+  - escena: llanura
+    params: {hora: atardecer, milpa: true, sol_x: 0.5, niebla: 0.3, montanas: true}
+    efectos: [ceniza]
+    camara: {pan: 6}
+    actores:
+      - sprite: tzukan/chaac_espalda
+        pos: [128, 372]
+        escala: 1.6
+        movimiento: [0, -2.5]
+        flota: 0.8
+    texto: "Cuentan que hubo una sequía tan terrible, que ni Chaac, el dios de la lluvia, encontraba una sola gota."
+
+  # 4. Se sienta sobre el tronco
+  - escena: bosque
+    params: {hora: tarde, niebla: true, semilla: 3}
+    camara: {pan: 5}
+    actores:
+      - sprite: tzukan/caballo_alado
+        pos: [36, 334]
+        escala: 0.8
+      - sprite: tzukan/tronco
+        pos: [120, 372]
+        escala: 1.3
+        balanceo: 1.5
+      - sprite: tzukan/chaac_sentado
+        pos: [104, 342]
+        escala: 1.4
+    texto: "Cansado, se sentó sobre un tronco a descansar… pero el tronco se movió."
+
+  # 5. El bocado
+  - escena: bosque
+    params: {hora: tarde, niebla: true, semilla: 4}
+    efectos: [relampago]
+    relampago_t: [2.6]
+    camara: {pan: 4}
+    actores:
+      - sprite: tzukan/caballo_alado
+        pos: [64, 380]
+        desaparece: 2.65
+      - sprite: tzukan/alzada
+        pos: [160, 384]
+        escala: 1.1
+        movimiento: [-6, 1]
+    texto: "Era Tzukán. Y de un solo bocado, se tragó al caballo del dios."
+
+  # 6. Hacia el mar
+  - escena: mar_tormenta
+    params: {olas: 0.9, claro: [0.8, 0.25]}
+    efectos: [relampago]
+    camara: {pan: 6}
+    actores:
+      - sprite: tzukan/vuelo
+        pos: [10, 196]
+        movimiento: [18, -1]
+        flota: 4
+    texto: "Furioso, Chaac la domó y la obligó a llevarlo hasta el mar, para devolverles el agua a los cenotes."
+
+  # 7. El trueno
+  - escena: mar_tormenta
+    params: {olas: 1.1, claro: [0.75, 0.22], semilla: 2}
+    efectos: [relampago, lluvia]
+    relampago_t: [7.4]
+    lluvia: {cantidad: 160, viento: 0.25}
+    camara: {pan: 4}
+    actores:
+      - sprite: tzukan/vuelo_sola
+        pos: [70, 205]
+        escala: 0.75
+        movimiento: [10, -3]
+        flota: 3
+        desaparece: 7.45
+    texto: "Desde entonces es la guardiana del agua. Y dicen que cada vez que intenta volver al mar, Chaac la fulmina con un trueno… y la convierte en lluvia."
+
+  # 8. El remate: renace en el cenote
+  - escena: cenote
+    params: {gotas: true, turbidez: 0.6, semilla: 2}
+    efectos: [ceniza]
+    camara: {pan: 3}
+    actores:
+      - ojos: {pos: [124, 316], color: [255, 214, 70], separacion: 9, tam: 2, aparece: 3.0}
+    texto: "Pero siempre renace, en el fondo de algún cenote. Esperando. ¿Tú te meterías a nadar?"

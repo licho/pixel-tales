@@ -14,6 +14,7 @@ Parámetros:
   ciudad     {x: 0.5, ancho: 0.6, alto: 0.05, tipo: 'china'|'oriental'}  ciudad amurallada en el horizonte
   huesos     bool  calaveras y huesos semienterrados (campo de Changping)
   lanzas_rotas int  lanzas clavadas/rotas en el suelo (default 0)
+  milpa      bool  milpa seca en surcos (sequía)
   niebla     0-1   niebla baja sobre el suelo (default 0.25)
   semilla    int
 
@@ -227,6 +228,25 @@ class Escena(Scene):
                 hgt = 2 + 8 * v * rng.random()
                 d.line([(x, y), (x + rng.uniform(-2, 2), y - hgt)], fill=(84, 90, 52) if hora != "noche" else (40, 44, 34))
 
+        if p.get("milpa"):                                        # milpa seca en surcos
+            seca, seca_d = (176, 140, 82), (120, 90, 50)
+            for k in range(14):
+                v = (k + 1) / 14
+                y = hy + 4 + (H - hy - 4) * v ** 1.5
+                hgt = 2 + 46 * v ** 1.5
+                esp = 3 + 16 * v ** 1.5
+                x = rng.uniform(0, esp)
+                while x < W:
+                    if rng.random() < 0.85:
+                        lean = rng.uniform(-0.25, 0.35) * hgt
+                        top = (x + lean, y - hgt)
+                        d.line([(x, y), top], fill=seca_d, width=max(1, int(v * 2.5)))
+                        for j in range(1, 4):                     # hojas secas caídas
+                            fy = y - hgt * j / 4
+                            fx = x + lean * j / 4
+                            sd = 1 if (j + int(x)) % 2 else -1
+                            d.line([(fx, fy), (fx + sd * hgt * 0.28, fy + hgt * 0.12)], fill=seca if j % 2 else seca_d)
+                    x += esp * rng.uniform(0.8, 1.2)
         for _ in range(int(p.get("lanzas_rotas", 0))):
             v = rng.uniform(0.1, 1.0) ** 0.7
             y = hy + 2 + (H - hy - 4) * v

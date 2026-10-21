@@ -13,6 +13,7 @@ Formatos de marca: `cuadrado` (perfil 1080), `portada_fb` (1640x624), `banner_yt
 | `pixeltales` | Marca del canal: mezcla de survival y xibalba (portadas, piezas de marca) |
 | `nahual` | Terror mexicano nocturno: azul noche, bosque, niebla, sepia de fotos, lámpara ámbar, ojos dorados |
 | `oceano` | Tormenta en el mar: grises pizarra, azul acero, verde abisal, espuma, ojos amarillos, rayo violeta |
+| `cenote` | Leyendas del agua en Yucatán: turquesa/jade de cenote, caliza, selva, azul maya (Chaac), sol de sequía, tormenta violeta, ojos dorados |
 | `antiguo` | Mundo antiguo épico: atardecer naranja, ocre/polvo, bronce, rojo legionario, negro Qin, azul persa, hueso. `ceniza` = polvo dorado |
 
 ## Escenas / fondos (`scenes/`)
@@ -33,7 +34,8 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `lago` | todos | Lago con montañas, bosque y niebla | `vista` (orilla/aerea), `hora` (anochecer/noche), `isla`, `niebla` | orilla: lancha (0.45 W, 0.93 H); aérea: lancha escala ~0.6 en x 0.4-0.6 W |
 | `mar_tormenta` | todos | Mar en tormenta: nubes, cortinas de lluvia, olas animadas con espuma, niebla, rayo (con `relampago`). Las olas tapan a los actores según su profundidad | `horizonte`, `olas` (0.2 calma – 1.5 fuerte), `claro` [x,y], `niebla`, `espuma` [[x,y,ancho]...] (salpicaduras), `semilla` | barco (0.35 W, 0.86-0.9 H) con `flota` y `balanceo`; criatura (0.5 W, 0.78-0.86 H) |
 | `imagen` | todos | Usa una imagen (ej. de IA) como fondo y la pasa por la paleta del estilo; encima funcionan lluvia, relámpago, ojos, zoom… Sin parallax ni olas animadas | `archivo` (ruta en el repo, ej. `fondos/...`), `foco` [x,y], `brillo` | coordenadas = píxeles de la capa |
-| `llanura` | todos | Llanura del mundo antiguo: cielo, sol bajo, montañas, polvo; extras: cauce seco, estrecho de mar con puentes de barcos, ciudad amurallada (china), campo de huesos y lanzas rotas | `hora` (atardecer/polvo/anochecer/noche/tormenta), `horizonte` (0.42), `sol`, `sol_x`, `montanas`, `rio_seco`, `estrecho` [y0,y1], `puentes` [y...], `ciudad` {x,ancho,alto,tipo}, `huesos`, `lanzas_rotas` (n), `niebla`, `semilla` | horizonte y≈0.42 H; ejército en suelo zona [0, 0.43H, W, 0.97H]; sobre puente en y=f·H: zona [0, yb-3, W, yb] con alto 4-8; elefantes cerca (x, 0.92 H, escala ~1.1), lejos (0.69 H, escala 0.55); estandartes pos [x, 0.97 H] alto 150-165 (la tela queda arriba del subtítulo) |
+| `cenote` | todos | Interior de cenote a ras del agua: bóveda de caliza con abertura al cielo, raíces, rayos de luz; bajo el agua todo (actores incluidos) se tiñe y se pierde con la profundidad, con cáusticas animadas | `agua` (0.46), `turbidez` (0-1), `rayos`, `raices`, `gotas` (ondas en la superficie), `hora` (dia/tarde/noche), `semilla` | superficie y≈0.46 H; tronco/serpiente en el fondo pos [0.5 W, 0.86 H] con `contraluz: false`; ojos bajo el agua y 0.78-0.86 H |
+| `llanura` | todos | Llanura del mundo antiguo: cielo, sol bajo, montañas, polvo; extras: cauce seco, estrecho de mar con puentes de barcos, ciudad amurallada (china), campo de huesos y lanzas rotas | `hora` (atardecer/polvo/anochecer/noche/tormenta), `horizonte` (0.42), `sol`, `sol_x`, `montanas`, `rio_seco`, `estrecho` [y0,y1], `puentes` [y...], `ciudad` {x,ancho,alto,tipo}, `huesos`, `lanzas_rotas` (n), `milpa` (milpa seca), `niebla`, `semilla` | horizonte y≈0.42 H; ejército en suelo zona [0, 0.43H, W, 0.97H]; sobre puente en y=f·H: zona [0, yb-3, W, yb] con alto 4-8; elefantes cerca (x, 0.92 H, escala ~1.1), lejos (0.69 H, escala 0.55); estandartes pos [x, 0.97 H] alto 150-165 (la tela queda arriba del subtítulo) |
 | `muralla_romana` | H, V | Muralla de frontera de noche: adarve que se aleja, parapeto con almenas, antorchas, luna, colinas y niebla | `antorchas` (n), `niebla`, `luna`, `semilla` | legionarios: lejos (0.57 W, 0.505 H, esc 0.4), medio (0.46 W, 0.66 H, esc 0.85), cerca (0.59 W, 0.98 H, esc 1.9) — usar `subtitulos_y: 0.13` si el de cerca tapa el texto |
 | `juego_pelota` | H, V | Cancha de pelota de noche, aros, templos, luna | `aros`, `antorchas`, `luna`, `semilla` | dos personajes (0.40 W, 0.97 H) y (0.60 W, 0.97 H) |
 
@@ -61,6 +63,13 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `oceano/primigenio` | Criatura colosal alada con tentáculos, ojos amarillos que brillan; ancla = línea del agua (ancho 270) | 192 px |
 | `antiguo/elefante` | Elefante de guerra con armadura roja, torre (howdah) con soldados, mira a la derecha (ancho 96) | 84 px |
 | `antiguo/legionario` | Legionario romano: lorica, scutum rojo, pilum, cresta; mira a la derecha | 64 px |
+| `tzukan/tronco` | Tzukán dormida: parece un tronco con musgo; ojo cerrado en (160,16) del sprite (ancho 176) | 34 px |
+| `tzukan/alzada` | Tzukán levantándose, alas de plumas verdes abiertas, boca abierta, mira a la izquierda; ojo brilla (ancho 150) | 190 px |
+| `tzukan/vuelo` | Tzukán volando a la derecha con Chaac montado (ancho 240) | 110 px |
+| `tzukan/vuelo_sola` | Igual, sin Chaac | 110 px |
+| `tzukan/chaac_espalda` | Chaac (dios de la lluvia, azul, tocado de plumas, hacha) caminando de espaldas | 80 px |
+| `tzukan/chaac_sentado` | Chaac sentado de perfil, mira a la derecha; ancla = asiento | 66 px |
+| `tzukan/caballo_alado` | Caballo alado blanco, de perfil mirando a la derecha | 70 px |
 | `oceano/pesquero` | Barco pesquero, proa a la derecha, farol encendido; ancla = línea del agua | 50 px |
 
 ## Actores animados
@@ -86,6 +95,8 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `pausa` | Igual pero en PAUSA; combínalo con `congelado: true` en el panel para detener la animación |
 | *(panel)* `zoom` | `zoom: {centro: [x, y], factor: 3, factor_final: 5}` zoom digital pixelado (con acercamiento lento opcional) |
 | *(automático)* | Fuego animado con humo; antorchas parpadean; contraluz en personajes cerca de fuego |
+
+Panel: `relampago_t: [seg, ...]` hace que el rayo caiga en esos segundos exactos (con el efecto `relampago`); útil con `desaparece` en un sprite.
 
 ## Episodio
 ```yaml
