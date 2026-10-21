@@ -1,9 +1,11 @@
-# LOS EJÉRCITOS MÁS GRANDES DE LA ANTIGÜEDAD — reel vertical (~60 s). Sin voz todavía.
+# LOS EJÉRCITOS MÁS GRANDES DE LA ANTIGÜEDAD — reel vertical (~73 s) con voz de Ludovico.
 # Coordenadas en pixeles de arte: vertical = 256 x 384 (la vista es 216 x 384). Horizonte 0.42 => y≈161.
 titulo: "Los ejércitos más grandes de la antigüedad"
 estilo: antiguo
 formato: vertical
 subtitulos: true
+voz: ../../audio/ejercitos_antiguedad_toma1.mp3          # voz: Ludovico (ElevenLabs, eleven_v4)
+palabras: ../../audio/ejercitos_antiguedad_toma1.palabras.json
 
 paneles:
   # 1. El río seco: un ejército a lo lejos
