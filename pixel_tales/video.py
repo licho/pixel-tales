@@ -250,10 +250,14 @@ class PanelRenderer:
             img = Image.fromarray(self.alb_u8.copy())
             zm = Image.new("L", (LW, LH), 0)
             depth = self.depth0.copy()
+            brilla = []
             for i, (fn, cfg) in enumerate(self.dyn):
                 one = Image.new("L", (LW, LH), 0)
                 fn(img, one, cfg, t, i)
                 m1 = np.asarray(one) > 127
+                e = (cfg or getattr(fn, "cfg", None) or {}).get("emite") if isinstance(cfg or getattr(fn, "cfg", None), dict) else None
+                if e:
+                    brilla.append((m1, float(e)))
                 depth[m1] = getattr(fn, "y", 1e6)
                 zm.paste(255, (0, 0), one)
             zmask = np.asarray(zm) > 127
@@ -264,6 +268,9 @@ class PanelRenderer:
         if not self.dyn:
             self.sc.depth = self.depth0
         col = alb * light + em + extra
+        if self.dyn:
+            for m1, e in brilla:                                  # actores con luz propia (fuego)
+                col[m1] = alb[m1] * e
         self.sc.flash = flash
         extra_a = self.sc.animar(col, t)
         if isinstance(extra_a, np.ndarray):
@@ -282,6 +289,8 @@ class PanelRenderer:
         e = ease(t / dur)
         lt = (t - dur * 0.55) % 7.3
         flash = self.relampago and (0 < lt < 0.1 or 0.2 < lt < 0.26)
+        if self.relampago and self.panel.get("relampago_t") is not None:     # rayos en segundos exactos
+            flash = any(0 < t - x < 0.1 or 0.2 < t - x < 0.26 for x in self.panel["relampago_t"])
         W = self.VW * S
 
         def ox(f):

@@ -1,0 +1,20 @@
+{
+  "ancla": [
+    100,
+    75
+  ],
+  "brillos": [
+    {
+      "pos": [
+        22,
+        38
+      ],
+      "color": [
+        255,
+        150,
+        50
+      ]
+    }
+  ],
+  "notas": "Serpiente de fuego volando a la izquierda. Usa `emite: 1.0` para que brille."
+}

@@ -33,6 +33,9 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `lago` | todos | Lago con montañas, bosque y niebla | `vista` (orilla/aerea), `hora` (anochecer/noche), `isla`, `niebla` | orilla: lancha (0.45 W, 0.93 H); aérea: lancha escala ~0.6 en x 0.4-0.6 W |
 | `mar_tormenta` | todos | Mar en tormenta: nubes, cortinas de lluvia, olas animadas con espuma, niebla, rayo (con `relampago`). Las olas tapan a los actores según su profundidad | `horizonte`, `olas` (0.2 calma – 1.5 fuerte), `claro` [x,y], `niebla`, `espuma` [[x,y,ancho]...] (salpicaduras), `semilla` | barco (0.35 W, 0.86-0.9 H) con `flota` y `balanceo`; criatura (0.5 W, 0.78-0.86 H) |
 | `imagen` | todos | Usa una imagen (ej. de IA) como fondo y la pasa por la paleta del estilo; encima funcionan lluvia, relámpago, ojos, zoom… Sin parallax ni olas animadas | `archivo` (ruta en el repo, ej. `fondos/...`), `foco` [x,y], `brillo` | coordenadas = píxeles de la capa |
+| `calle_1978` | H, V | Calle del centro de CDMX de noche (1978): fachadas, zanja de obra, tierra, vallas, lámparas de obra y borde de piedra tallada | `lamparas` (n), `piedra`, `semilla` | trabajadores (0.2 W, 0.80 H) y (0.8 W, 0.82 H) escala 1.3 |
+| `coatepec` | todos | Cerro de Coatepec con templo en la cima, o la plataforma de la cima de cerca | `vista` (lejos/cima), `hora` (atardecer/noche/amanecer), `estallido` (luz de nacimiento), `antorchas` (n, por el camino y al pie), `luna`, `semilla` | lejos: cima (0.5 W, 0.30 H), multitud zona [0, 0.78H, W, 0.99H]; cima: personaje (0.5 W, 0.97 H) escala 1.5-1.8 |
+| `piedra_coyolxauhqui` | todos | Piedra de Coyolxauhqui en relieve: vista cenital, o al pie de la escalinata del Templo Mayor con los dos templos y braseros | `vista` (cenital/escalinata), `luz` (lamparas/antorchas), `semilla` | escalinata: cima (0.5 W, 0.18 H) para ojos |
 | `llanura` | todos | Llanura del mundo antiguo: cielo, sol bajo, montañas, polvo; extras: cauce seco, estrecho de mar con puentes de barcos, ciudad amurallada (china), campo de huesos y lanzas rotas | `hora` (atardecer/polvo/anochecer/noche/tormenta), `horizonte` (0.42), `sol`, `sol_x`, `montanas`, `rio_seco`, `estrecho` [y0,y1], `puentes` [y...], `ciudad` {x,ancho,alto,tipo}, `huesos`, `lanzas_rotas` (n), `niebla`, `semilla` | horizonte y≈0.42 H; ejército en suelo zona [0, 0.43H, W, 0.97H]; sobre puente en y=f·H: zona [0, yb-3, W, yb] con alto 4-8; elefantes cerca (x, 0.92 H, escala ~1.1), lejos (0.69 H, escala 0.55); estandartes pos [x, 0.97 H] alto 150-165 (la tela queda arriba del subtítulo) |
 | `muralla_romana` | H, V | Muralla de frontera de noche: adarve que se aleja, parapeto con almenas, antorchas, luna, colinas y niebla | `antorchas` (n), `niebla`, `luna`, `semilla` | legionarios: lejos (0.57 W, 0.505 H, esc 0.4), medio (0.46 W, 0.66 H, esc 0.85), cerca (0.59 W, 0.98 H, esc 1.9) — usar `subtitulos_y: 0.13` si el de cerca tapa el texto |
 | `juego_pelota` | H, V | Cancha de pelota de noche, aros, templos, luna | `aros`, `antorchas`, `luna`, `semilla` | dos personajes (0.40 W, 0.97 H) y (0.60 W, 0.97 H) |
@@ -61,6 +64,12 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `oceano/primigenio` | Criatura colosal alada con tentáculos, ojos amarillos que brillan; ancla = línea del agua (ancho 270) | 192 px |
 | `antiguo/elefante` | Elefante de guerra con armadura roja, torre (howdah) con soldados, mira a la derecha (ancho 96) | 84 px |
 | `antiguo/legionario` | Legionario romano: lorica, scutum rojo, pilum, cresta; mira a la derecha | 64 px |
+| `xiuhcoatl/huitzilopochtli` | Huitzilopochtli de frente: casco de colibrí, pintura azul, escudo con plumón | 112 px |
+| `xiuhcoatl/xiuhcoatl` | Serpiente de fuego volando a la izquierda (hocico hacia atrás, segmentos, cola en rayo); usar `emite: 1.0` (ancho 200) | 76 px |
+| `xiuhcoatl/coatlicue` | Coatlicue barriendo, falda de serpientes, mira a la derecha | 84 px |
+| `xiuhcoatl/coyolxauhqui` | Guerrera con cascabeles en la mejilla, escudo y macuahuitl, mira a la derecha | 84 px |
+| `xiuhcoatl/trabajador` | Trabajador de 1978 con casco amarillo y pala | 64 px |
+| `xiuhcoatl/plumas` | Bola de plumas | 16 px |
 | `oceano/pesquero` | Barco pesquero, proa a la derecha, farol encendido; ancla = línea del agua | 50 px |
 
 ## Actores animados
@@ -70,8 +79,9 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `murcielagos` | `cantidad`, `zona: [x0,y0,x1,y1]`, `tam`, `semilla` |
 | `escorpiones` | `cantidad`, `zona: [x0,y0,x1,y1]`, `tam`, `semilla` |
 | `ojos` | `pos`, `color` (default rojo), `separacion`, `tam`, `aparece` (segundo) — brillan en la oscuridad |
-| `ejercito` | Miles de soldados en perspectiva: `zona` [x0, y_lejos, x1, y_cerca], `tipo` (persa/qin/romano/indio), `alto_lejos`, `alto_cerca` (px), `avance` (px/seg, + derecha, 0 = quietos), `marcha`, `bloques` [soldados, hueco], `estandartes` (cada N), `densidad`, `bruma` [rgb], `poligono` (recorte), `semilla` |
+| `ejercito` | Miles de soldados en perspectiva: `zona` [x0, y_lejos, x1, y_cerca], `tipo` (persa/qin/romano/indio/mexica), `alto_lejos`, `alto_cerca` (px), `avance` (px/seg, + derecha, 0 = quietos), `marcha`, `bloques` [soldados, hueco], `estandartes` (cada N), `densidad`, `bruma` [rgb], `poligono` (recorte), `semilla` |
 | `estandarte` | Bandera que ondea: `pos` (pie del asta), `alto`, `ancho`, `color`, `color2`, `simbolo` (sol/rueda/dragon/aguila/nada), `fase` |
+| actor que brilla | cualquier actor animado con `emite: 1.0` se ve con luz propia (fuego), sin importar la oscuridad |
 | sprite en sombra | cualquier `sprite` con `brillo: 0.5` (más oscuro; sus ojos siguen brillando) y `contraluz: false` |
 | sprite animado | cualquier `sprite` con `aparece`, `desaparece` (seg), `movimiento: [dx, dy]` (px/seg), `flota` (px) o `balanceo` (grados) |
 
@@ -86,6 +96,8 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `pausa` | Igual pero en PAUSA; combínalo con `congelado: true` en el panel para detener la animación |
 | *(panel)* `zoom` | `zoom: {centro: [x, y], factor: 3, factor_final: 5}` zoom digital pixelado (con acercamiento lento opcional) |
 | *(automático)* | Fuego animado con humo; antorchas parpadean; contraluz en personajes cerca de fuego |
+
+Panel: `relampago_t: [seg, ...]` hace que el rayo caiga en esos segundos exactos (con el efecto `relampago`); útil con `desaparece` en un sprite.
 
 ## Episodio
 ```yaml

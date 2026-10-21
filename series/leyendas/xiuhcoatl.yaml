@@ -1,0 +1,110 @@
+# XIUHCÓATL, LA SERPIENTE DE FUEGO — reel vertical (~60 s). Sin voz todavía.
+# Coordenadas en pixeles de arte: vertical = 256 x 384 (la vista es 216 x 384).
+titulo: "Xiuhcóatl, la serpiente de fuego"
+estilo: xibalba
+formato: vertical
+subtitulos: true
+
+paneles:
+  # 1. El hallazgo (1978)
+  - escena: calle_1978
+    params: {lamparas: 2}
+    titulo: "XIUHCÓATL"
+    camara: {pan: 6}
+    actores:
+      - sprite: xiuhcoatl/trabajador
+        pos: [52, 310]
+        escala: 1.3
+      - sprite: xiuhcoatl/trabajador
+        pos: [204, 316]
+        escala: 1.3
+        espejo: true
+    texto: "En 1978, unos trabajadores que cavaban bajo la Ciudad de México encontraron a una diosa… hecha pedazos."
+
+  # 2. La piedra
+  - escena: piedra_coyolxauhqui
+    params: {vista: cenital, luz: lamparas}
+    camara: {pan: 2}
+    zoom: {centro: [128, 192], factor: 1.0, factor_final: 1.35}
+    texto: "Era Coyolxauhqui. Y quien la destrozó… fue su propio hermano, el mismo día en que nació."
+
+  # 3. Coatepec: Coatlicue barre y cae la bola de plumas
+  - escena: coatepec
+    params: {vista: cima, hora: atardecer}
+    camara: {pan: 4}
+    actores:
+      - sprite: xiuhcoatl/coatlicue
+        pos: [100, 360]
+        escala: 1.5
+      - sprite: xiuhcoatl/plumas
+        pos: [150, 60]
+        aparece: 1.0
+        movimiento: [-2, 40]
+        flota: 2
+        desaparece: 7.0
+    texto: "Coatlicue barría un templo en el cerro de Coatepec, cuando cayó del cielo una bola de plumas. La guardó… y quedó embarazada."
+
+  # 4. La traición: los 400 suben con antorchas
+  - escena: coatepec
+    params: {vista: lejos, hora: noche, antorchas: 60}
+    camara: {pan: 6}
+    actores:
+      - ejercito: {zona: [0, 300, 256, 380], tipo: mexica, alto_lejos: 4, alto_cerca: 14, avance: 0, marcha: true,
+                   estandartes: 7, semilla: 8, bruma: [30, 24, 34]}
+      - sprite: xiuhcoatl/coyolxauhqui
+        pos: [120, 372]
+        escala: 1.3
+    texto: "Su hija Coyolxauhqui lo tomó como una deshonra. Y junto con sus cuatrocientos hermanos, subió al cerro para matarla."
+
+  # 5. El nacimiento
+  - escena: coatepec
+    params: {vista: cima, hora: noche, estallido: true}
+    efectos: [relampago, ceniza]
+    relampago_t: [0.2]
+    camara: {pan: 0}
+    actores:
+      - sprite: xiuhcoatl/huitzilopochtli
+        pos: [128, 372]
+        escala: 1.8
+      - sprite: xiuhcoatl/xiuhcoatl
+        pos: [190, 268]
+        escala: 0.42
+        espejo: true
+        flota: 1.5
+        emite: 1.0
+    texto: "Pero en ese instante nació Huitzilopochtli. Ya adulto. Ya armado. Y en su mano llevaba la Xiuhcóatl… la serpiente de fuego."
+
+  # 6. El golpe
+  - escena: coatepec
+    params: {vista: lejos, hora: noche, antorchas: 30, semilla: 2}
+    efectos: [relampago]
+    relampago_t: [2.4]
+    camara: {pan: 4}
+    actores:
+      - sprite: xiuhcoatl/coyolxauhqui
+        pos: [140, 150]
+        escala: 0.7
+        aparece: 2.3
+        movimiento: [8, 40]
+        balanceo: 40
+      - sprite: xiuhcoatl/xiuhcoatl
+        pos: [330, 60]
+        movimiento: [-90, 40]
+        emite: 1.0
+        desaparece: 3.2
+    texto: "Con ella atravesó a su hermana, la despedazó y arrojó sus restos cerro abajo. Luego persiguió a los cuatrocientos… hasta vencerlos a todos."
+
+  # 7. El sol vence a la luna y las estrellas
+  - escena: coatepec
+    params: {vista: lejos, hora: amanecer, semilla: 3}
+    camara: {pan: 6}
+    texto: "Para los mexicas, eso se repite cada mañana: el sol vence a la luna y a las estrellas."
+
+  # 8. Remate: la piedra al pie del templo
+  - escena: piedra_coyolxauhqui
+    params: {vista: escalinata}
+    efectos: [ceniza]
+    camara: {pan: 4}
+    actores:
+      - ojos: {pos: [128, 70], color: [255, 150, 50], separacion: 10, tam: 2, aparece: 4.5}
+    texto: "Por eso pusieron su piedra al pie del templo de Huitzilopochtli… justo donde caían los sacrificados. Para que nadie olvidara lo que hace la serpiente de fuego."
