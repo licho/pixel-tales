@@ -102,3 +102,21 @@ def niebla_profundidad(scene, col, cx, cy, radio, minimo=0.0):
     k = minimo + (1 - minimo) * smooth(0.0, radio, d)
     col *= k[..., None]
     return col
+
+
+def fogata(scene, x, y, w, radio=3.2, intensidad=0.95):
+    """Fogata en el suelo (x, y = base, w = ancho): leños cruzados, piedras, flamas, humo y luz que parpadea."""
+    m = scene.mask(lambda d: (d.line([(x - w / 2, y), (x + w / 2, y - w * 0.15)], fill=255, width=max(1, int(w / 6))),
+                              d.line([(x - w / 2, y - w * 0.15), (x + w / 2, y)], fill=255, width=max(1, int(w / 6)))))
+    scene.mid_alb[m] = (70, 44, 26)
+    scene.mid_a |= m
+    for i in range(7):
+        a = math.pi * i / 6
+        sx, sy = x + math.cos(a) * w * 0.65, y + 1 + math.sin(a) * w * 0.12
+        st = scene.mask(lambda d: d.ellipse([sx - w * 0.08, sy - w * 0.06, sx + w * 0.08, sy + w * 0.06], fill=255))
+        scene.mid_alb[st] = (90, 86, 80)
+        scene.mid_a |= st
+    scene.fires.append({"x0": int(x - w * 0.35), "x1": int(x + w * 0.35) + 1, "y": int(y - w * 0.12),
+                        "tam": w / 12, "humo": True})
+    scene.lights.append(Light(f"fogata{len(scene.lights)}", scene.point(x, y - w * 0.3, w * radio, intensidad), FUEGO,
+                              parpadeo="fuego", contraluz=True))

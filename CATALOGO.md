@@ -29,7 +29,7 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `negro` | todos | Pantalla negra para inicios/cortes/finales | `niebla`, `luz` (luz neutra para actores) | cualquier punto; ideal con `ojos` |
 | `foto_mesa` | H, V | Foto antigua sepia sobre mesa o lancha, bajo lámpara | `contenido` (hombre_jaguar/abuelo/bebe/reverso), `texto` (reverso, líneas con \|), `superficie` (mesa/lancha), `giro` | centro foto (0.5 W, 0.46 H); ojos del 'bebe' en (0.62 W, 0.38 H) |
 | `archivo` | H, V | Cuarto de investigación: corcho con fotos e hilos rojos, escritorio, lámpara | `ventana`, `jaguar` | silla (0.52 W, 0.93 H) |
-| `bosque` | todos | Bosque con sendero de lodo y niebla | `hora` (tarde/noche), `niebla`, `huellas`, `orilla` (agua abajo), `semilla` | sendero cerca (0.5 W, 0.95 H); entre árboles x 0.25-0.75 W, y 0.62-0.66 H; lancha (0.45 W, 0.97 H) con orilla |
+| `bosque` | todos | Bosque con sendero de lodo y niebla | `hora` (tarde/noche), `niebla`, `huellas`, `orilla` (agua abajo), `fogata` [x, y, ancho], `luna` (intensidad, 0.35 con fogata), `semilla` | sendero cerca (0.5 W, 0.95 H); entre árboles x 0.25-0.75 W, y 0.62-0.66 H; lancha (0.45 W, 0.97 H) con orilla |
 | `lago` | todos | Lago con montañas, bosque y niebla | `vista` (orilla/aerea), `hora` (anochecer/noche), `isla`, `niebla` | orilla: lancha (0.45 W, 0.93 H); aérea: lancha escala ~0.6 en x 0.4-0.6 W |
 | `mar_tormenta` | todos | Mar en tormenta: nubes, cortinas de lluvia, olas animadas con espuma, niebla, rayo (con `relampago`). Las olas tapan a los actores según su profundidad | `horizonte`, `olas` (0.2 calma – 1.5 fuerte), `claro` [x,y], `niebla`, `espuma` [[x,y,ancho]...] (salpicaduras), `semilla` | barco (0.35 W, 0.86-0.9 H) con `flota` y `balanceo`; criatura (0.5 W, 0.78-0.86 H) |
 | `imagen` | todos | Usa una imagen (ej. de IA) como fondo y la pasa por la paleta del estilo; encima funcionan lluvia, relámpago, ojos, zoom… Sin parallax ni olas animadas | `archivo` (ruta en el repo, ej. `fondos/...`), `foco` [x,y], `brillo` | coordenadas = píxeles de la capa |
@@ -61,6 +61,7 @@ Coordenadas relativas: multiplica por W x H del formato. (V) = vertical, (H) = h
 | `oceano/primigenio` | Criatura colosal alada con tentáculos, ojos amarillos que brillan; ancla = línea del agua (ancho 270) | 192 px |
 | `antiguo/elefante` | Elefante de guerra con armadura roja, torre (howdah) con soldados, mira a la derecha (ancho 96) | 84 px |
 | `antiguo/legionario` | Legionario romano: lorica, scutum rojo, pilum, cresta; mira a la derecha | 64 px |
+| `fantasia/guerrero_sentado` | Guerrero encapuchado sentado en una piedra, inclinado hacia el fuego (a su derecha), espada clavada; ojo refleja el fuego | 92 px |
 | `oceano/pesquero` | Barco pesquero, proa a la derecha, farol encendido; ancla = línea del agua | 50 px |
 
 ## Actores animados

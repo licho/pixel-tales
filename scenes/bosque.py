@@ -5,6 +5,8 @@ Parámetros:
   niebla   bool (default true)
   huellas  bool  huellas grandes de felino en el lodo (default false)
   orilla   bool  agua en la parte baja (llegada a una isla / orilla de lago) (default false)
+  fogata   [x, y, ancho]  fogata en el suelo (x, y relativos; ancho en px, ej. 22)
+  luna     intensidad de la luz de luna de noche (default 1.0; baja a 0.3 para que mande la fogata)
   semilla  int
 
 Puntos útiles (relativos a W x H; pies):
@@ -16,7 +18,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 from pixel_tales.core import Light, fbm, smooth, vnoise
-from pixel_tales.pintura import estrellas
+from pixel_tales.pintura import estrellas, fogata
 from pixel_tales.scene import Scene
 
 
@@ -141,7 +143,7 @@ class Escena(Scene):
         if tarde:
             self.lights.append(Light("ocaso", self.point(vx, hy - 0.12 * H, 0.42 * W, 0.7), (1.0, 0.6, 0.35)))
         else:
-            self.lights.append(Light("luna", self.point(0.55 * W, 0.35 * H, 0.7 * W, 1.0), (0.6, 0.72, 0.95)))
+            self.lights.append(Light("luna", self.point(0.55 * W, 0.35 * H, 0.7 * W, float(p.get("luna", 1.0))), (0.6, 0.72, 0.95)))
 
         # primer plano: hojas colgando arriba y pasto abajo
         def fg(dr):
@@ -153,6 +155,10 @@ class Escena(Scene):
                 dr.line([(x, H), (x + rng.uniform(-2, 2), H - h)], fill=255)
         self.fg_a = self.mask(fg)
         self.fg_alb[:] = (12, 20, 16)
+
+        if p.get("fogata"):
+            fx, fy, fw = p["fogata"]
+            fogata(self, fx * W, fy * H, fw)
 
     def animar(self, col, t):
         if self.water is not None:
