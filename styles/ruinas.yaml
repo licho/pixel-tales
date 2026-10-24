@@ -1,0 +1,57 @@
+nombre: ruinas
+descripcion: Fantasía oscura bajo la luna. Grises pizarra y azul noche, piedra fría, musgo, tierra pálida iluminada, ramas secas y matorrales rojizos.
+tramado: 12
+ambiente: [0.62, 0.66, 0.74]      # luz fría de luna
+primer_plano: 0.45
+lluvia: [120, 130, 140]
+salpicadura: [190, 196, 200]
+ceniza: [150, 156, 160]
+brasa: [240, 190, 110]
+humo: [70, 76, 86]
+texto: [226, 230, 232]
+acento: [214, 226, 210]
+fuente_texto: PixelifySans-Bold.woff
+fuente_titulo: Silkscreen-Bold.woff
+paleta:
+  # noche / sombras
+  - [8, 10, 14]
+  - [14, 17, 24]
+  - [20, 24, 32]
+  - [28, 32, 42]
+  - [36, 42, 54]
+  - [46, 52, 66]
+  # pizarra / nubes
+  - [58, 66, 80]
+  - [72, 80, 96]
+  - [88, 98, 112]
+  - [108, 118, 130]
+  - [132, 142, 152]
+  - [160, 170, 176]
+  # luz de luna
+  - [190, 200, 196]
+  - [216, 226, 214]
+  - [240, 246, 230]
+  # piedra cálida
+  - [60, 58, 60]
+  - [84, 82, 82]
+  - [112, 108, 104]
+  # musgo
+  - [36, 52, 34]
+  - [58, 80, 42]
+  - [92, 116, 56]
+  - [130, 150, 74]
+  # tierra del camino
+  - [74, 60, 44]
+  - [110, 92, 64]
+  - [150, 130, 92]
+  - [190, 172, 128]
+  - [222, 208, 160]
+  # madera seca / matorral
+  - [44, 30, 26]
+  - [70, 46, 36]
+  - [104, 72, 52]
+  - [60, 30, 34]
+  - [88, 44, 46]
+  # fuego (por si hay antorchas)
+  - [240, 190, 110]
+  - [200, 110, 50]

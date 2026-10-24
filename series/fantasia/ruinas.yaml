@@ -1,0 +1,12 @@
+# Réplica en código de la imagen de referencia: ruinas bajo la luna llena (fantasía oscura).
+titulo: "Ruinas bajo la luna"
+estilo: ruinas
+formato: cuadrado
+subtitulos: false
+
+paneles:
+  - escena: ruinas
+    camara: {pan: 4}
+    duracion: 8
+    actores:
+      - murcielagos: {cantidad: 5, zona: [110, 20, 220, 90], tam: 1}
